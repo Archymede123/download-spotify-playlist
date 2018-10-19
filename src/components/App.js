@@ -13,17 +13,40 @@ class App extends Component {
     super();
     this.state = {
       serverData: {},
-      filterString: ''
+      filterString: '',
+      filterRating: 0,
     }
 
+    this.resetRateFiltering = this.resetRateFiltering.bind(this);
+    this.addPlaylistRating = this.addPlaylistRating.bind(this);
     // this.addTag = this.addTag.bind(this)
+
   }
+
+
 
   addTag = (index, tag) => {
     let playlists = this.state.playlists
     playlists[index].tags ? playlists[index].tags.push(tag)
       : playlists[index].tags = [tag]
     this.setState({ playlists })
+  }
+
+  addPlaylistRating = (index, rating) => {
+    let playlists = this.state.playlists
+    playlists.find(playlist => playlist.index === index).rating = rating
+    console.log(playlists)
+    this.setState({ playlists })
+  }
+
+  updateFilteredRating = (rating) => {
+    let filterRating = this.state.filterRating
+    filterRating = rating
+    this.setState({ filterRating })
+  }
+
+  resetRateFiltering = (event) => {
+    this.setState({ filterRating: 0 })
   }
 
   componentDidMount() {
@@ -50,21 +73,6 @@ class App extends Component {
         let playlists = playlistData.items
         let trackDataPromises = playlists.map(playlist => {
           let responsePromise = [];
-          // let i = 1;                     //  set your counter to 1
-          // function fetchPlaylistTracks() {           //  create a loop function
-          //   setTimeout(function () {
-          //     let responsePromiseDetails = fetch(`${playlist.tracks.href}?offset=${i}00`, {
-          //       headers: { 'Authorization': 'Bearer ' + accessToken }
-          //     }).then(response => response.json())
-          //     console.log(responsePromiseDetails)
-          //     responsePromise.push(responsePromiseDetails);
-          //     i++;
-          //     if (i < 5) {
-          //       fetchPlaylistTracks();
-          //     }
-          //   }, 6000)
-          // }
-          // fetchPlaylistTracks();
           [0, 1, 2].forEach(page => {
             let responsePromiseDetails = fetch(`${playlist.tracks.href}?offset=${page}00`, {
               headers: { 'Authorization': 'Bearer ' + accessToken }
@@ -102,11 +110,13 @@ class App extends Component {
       })
       .then(playlists => {
         this.setState({
-          playlists: playlists.map(item => {
+          playlists: playlists.map((item, index) => {
             return {
               name: item.name,
               songs: item.trackDatas,
-              imageUrl: item.images[0].url
+              imageUrl: item.images[0].url,
+              rating: 0,
+              index: index
             }
           }
           )
@@ -124,6 +134,17 @@ class App extends Component {
           let matchesSong = playlist.songs.find(song =>
             song.name.toLowerCase().includes(this.state.filterString.toLowerCase()))
           return matchesPlaylist || matchesSong
+        }).filter(playlist => {
+          // let matcheRating = playlist.rating === this.state.filterRating
+          // return matcheRating
+          let matcheRating;
+          if (this.state.filterRating !== 0) {
+            matcheRating = playlist.rating === this.state.filterRating
+            return matcheRating
+          } else {
+            matcheRating = playlist
+          }
+          return matcheRating
         }) : []
     return (
       <div className="App">
@@ -135,10 +156,22 @@ class App extends Component {
             <DownloadPlaylist playlists={this.state.playlists} />
             <PlaylistCounter playlists={playlistsToRender} />
             <HoursCounter playlists={playlistsToRender} />
-            <Filter onTextChange={text => this.setState({ filterString: text })} />
+            <Filter
+              onTextChange={text => this.setState({ filterString: text })}
+              updateFilteredRating={this.updateFilteredRating}
+              resetRateFiltering={this.resetRateFiltering}
+              ratingFilterValue={this.state.filterRating}
+            />
+
             <div className="playlistGrid">
               {playlistsToRender.map((playlist, key) =>
-                <Playlist playlist={playlist} addTag={this.addTag} key={key} index={key} />
+                <Playlist
+                  playlist={playlist}
+                  addTag={this.addTag}
+                  key={key}
+                  index={key}
+                  addPlaylistRating={this.addPlaylistRating}
+                />
               )}
             </div>
 

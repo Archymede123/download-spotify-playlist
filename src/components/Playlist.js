@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
 import '../css/Playlist.css';
 import TagManager from './TagManager';
+import Rating from 'react-rating';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { fasStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
+
+// add icon to the library
+library.add(faStarSolid, faStarRegular)
 
 
 class Playlist extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(rating) {
+    this.props.addPlaylistRating(this.props.playlist.index, rating)
+  }
+
   render() {
     let playlist = this.props.playlist;
     let hasTags = playlist.tags === undefined ? false : true
-    console.log(hasTags)
     let tagList;
 
     if (hasTags) {
@@ -18,8 +36,6 @@ class Playlist extends Component {
           )}
         </div>
     }
-
-    console.log(tagList)
 
     return (
       <div className="playlist">
@@ -35,8 +51,13 @@ class Playlist extends Component {
           <p className="cta">see playlist</p>
         </div>
         <TagManager addTag={this.props.addTag} index={this.props.index} />
-
-
+        <Rating
+          className="playlist-rating"
+          emptySymbol={<FontAwesomeIcon icon={['far', 'star']} style={{ color: 'blue' }} />}
+          fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} />}
+          initialRating={playlist.rating}
+          onClick={this.handleClick}
+        />
       </div>
 
     );
