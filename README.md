@@ -1,3 +1,19 @@
+// let i = 1;                     //  set your counter to 1
+          // function fetchPlaylistTracks() {           //  create a loop function
+          //   setTimeout(function () {
+          //     let responsePromiseDetails = fetch(`${playlist.tracks.href}?offset=${i}00`, {
+          //       headers: { 'Authorization': 'Bearer ' + accessToken }
+          //     }).then(response => response.json())
+          //     console.log(responsePromiseDetails)
+          //     responsePromise.push(responsePromiseDetails);
+          //     i++;
+          //     if (i < 5) {
+          //       fetchPlaylistTracks();
+          //     }
+          //   }, 6000)
+          // }
+          // fetchPlaylistTracks();
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

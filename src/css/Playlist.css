@@ -20,20 +20,22 @@
 }
 
 
-
 ul, li, h3, .tagInput {
     position: relative;
     z-index: 3;
 }
 
-li, tagList {
+li, 
+tagList, 
+.playlist-rating span {
     list-style-type: none;
     z-index: 3;
     opacity: 0;
 }
 
 .playlist:hover li,
-.playlist:hover tagList {
+.playlist:hover tagList,
+.playlist:hover .playlist-rating span {
     opacity: 1;
 }
 
