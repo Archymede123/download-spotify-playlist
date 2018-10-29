@@ -4,7 +4,6 @@ import TagManager from './TagManager';
 import Rating from 'react-rating';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { fasStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
 
@@ -15,12 +14,12 @@ library.add(faStarSolid, faStarRegular)
 class Playlist extends Component {
   constructor(props) {
     super(props);
-
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(rating) {
-    this.props.addPlaylistRating(this.props.playlist.index, rating)
+  handleClick = () => {
+    console.log("yooo")
+    this.props.history.push(`/:playlistId`);
   }
 
   render() {
@@ -42,13 +41,13 @@ class Playlist extends Component {
         <img src={playlist.imageUrl} alt="playlist" />
         <h3>{playlist.name}</h3>
         <ul>
-          {playlist.songs.slice(0, 3).map(song =>
+          {playlist.songs.slice(0, 3).map((song, key) =>
             <li>{song.name}</li>
           )}
         </ul>
         {tagList}
         <div className="buttons">
-          <p className="cta">see playlist</p>
+          <button className="cta" onClick={this.handleClick}>see playlist</button>
         </div>
         <TagManager addTag={this.props.addTag} index={this.props.index} />
         <Rating
