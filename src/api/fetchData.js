@@ -7,17 +7,6 @@ export function fetchPlaylistInfos(accessToken) {
 }
 
 export function fetchPlaylistData(accessToken) {
-    // fetch('https://api.spotify.com/v1/me', {
-    //     headers: { 'Authorization': 'Bearer ' + accessToken }
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         this.setState({
-    //             user: {
-    //                 name: data.display_name
-    //             }
-    //         })
-    //     })
 
     let dataPromise = fetch(`https://api.spotify.com/v1/me/playlists?limit=49`, {
         headers: { 'Authorization': 'Bearer ' + accessToken }

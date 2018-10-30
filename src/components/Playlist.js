@@ -18,8 +18,9 @@ class Playlist extends Component {
   }
 
   handleClick = () => {
-    console.log("yooo")
-    this.props.history.push(`/:playlistId`);
+    let playlist = this.props.playlist
+    let playlistNameConcatenated = playlist.name.replace(/\//g, " ").split(" ").join('').toLowerCase()
+    this.props.history.push(`/playlist=${playlist.index}-${playlistNameConcatenated}`);
   }
 
   render() {
@@ -42,7 +43,7 @@ class Playlist extends Component {
         <h3>{playlist.name}</h3>
         <ul>
           {playlist.songs.slice(0, 3).map((song, key) =>
-            <li>{song.name}</li>
+            <li key={key}>{song.name}</li>
           )}
         </ul>
         {tagList}

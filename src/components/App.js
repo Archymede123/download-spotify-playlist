@@ -100,8 +100,6 @@ class App extends Component {
             song.name.toLowerCase().includes(this.state.filterString.toLowerCase()))
           return matchesPlaylist || matchesSong
         }).filter(playlist => {
-          // let matcheRating = playlist.rating === this.state.filterRating
-          // return matcheRating
           let matcheRating;
           if (this.state.filterRating !== 0) {
             matcheRating = playlist.rating === this.state.filterRating
@@ -142,14 +140,14 @@ class App extends Component {
                     render={(props) => <PlaylistsListing {...props} playlists={playlistsToRender} />}
                   />
                   <Route
-                    exact="/:playlistId"
-                    component={PlaylistPage}
+                    exact
+                    path="/:playlistId"
+                    render={(props) => <PlaylistPage {...props} playlists={playlistsToRender} />}
+                  // component={PlaylistPage}
                   />
                 </Switch>
-
               </div>
             </BrowserRouter>
-            {/* <PlaylistsListing playlists={playlistsToRender} /> */}
           </div> : <LoginPage />
         }
       </div>
