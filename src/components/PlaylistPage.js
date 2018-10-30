@@ -16,7 +16,6 @@ class PlaylistPage extends Component {
             playlist.index.toString() === playlistIndex[0]
         )
 
-        console.log(playlist)
         return (
             <div>
                 <p>{playlist.name}</p>

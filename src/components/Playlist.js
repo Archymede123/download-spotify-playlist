@@ -20,7 +20,7 @@ class Playlist extends Component {
   handleClick = () => {
     let playlist = this.props.playlist
     let playlistNameConcatenated = playlist.name.replace(/\//g, " ").split(" ").join('').toLowerCase()
-    this.props.history.push(`/playlist=${playlist.index}-${playlistNameConcatenated}`);
+    this.props.history.push(`/playlist=${playlist.index}-${playlistNameConcatenated}`)
   }
 
   render() {

@@ -27,7 +27,6 @@ class Router extends Component {
                         setPlaylists={this.setPlaylists}
                     >
                     </Route>
-                    {/* <Route exact path="/playlists" component={App}> </Route> */}
                     <Route exact path="/:playlistId" component={PlaylistPage}> </Route>
                     {/* <Route exact path="/playplist/:playplistId" component={App}> </Route> */}
                     <Route componenent={NotFound} />
