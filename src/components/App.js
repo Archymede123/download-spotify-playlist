@@ -12,10 +12,6 @@ import PlaylistCounter from './PlaylistCounter';
 import LoginPage from './LoginPage';
 import PlaylistPage from './PlaylistPage';
 
-// js 
-
-import { fetchPlaylistInfos, fetchPlaylistData } from '../api/fetchData'
-
 // css
 import '../css/App.css';
 
@@ -34,7 +30,12 @@ class App extends Component {
     this.addPlaylistRating = this.addPlaylistRating.bind(this);
   }
 
-
+  loadSpotifyData = (data) => {
+    this.setState({
+      playlists: data.playlists,
+      user: data.user
+    })
+  }
 
   addTag = (index, tag) => {
     let playlists = this.state.playlists
@@ -61,32 +62,26 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const localStorageUserRef = localStorage.getItem('user')
 
-    let accessToken = new URLSearchParams(window.location.search).get('access_token');
-    if (!accessToken) return;
+    if (localStorageUserRef) {
+      this.setState({ user: JSON.parse(localStorageUserRef) })
+    }
 
-    fetchPlaylistInfos(accessToken).then(data => {
-      this.setState({
-        user: {
-          name: data.display_name
-        }
-      })
-    })
+    const localStoragePlaylistsRef = localStorage.getItem('playlists')
+    if (localStoragePlaylistsRef) {
+      this.setState({ playlists: JSON.parse(localStoragePlaylistsRef) })
+    }
+  }
 
-    fetchPlaylistData(accessToken).then(playlists => {
-      this.setState({
-        playlists: playlists.map((item, index) => {
-          return {
-            name: item.name,
-            songs: item.trackDatas,
-            imageUrl: item.images[0].url,
-            rating: 0,
-            index: index
-          }
-        }
-        )
-      })
-    })
+  componentDidUpdate() {
+    localStorage.setItem(
+      "user",
+      JSON.stringify(this.state.user))
+
+    localStorage.setItem(
+      "playlists",
+      JSON.stringify(this.state.playlists))
   }
 
   render() {
@@ -114,7 +109,7 @@ class App extends Component {
         {this.state.user ?
           <div>
             <h1 >
-              {this.state.user.name}'s playlist
+              {this.state.user}'s playlist
             </h1>
             <DownloadPlaylist
               playlists={this.state.playlists}
@@ -148,7 +143,7 @@ class App extends Component {
                 </Switch>
               </div>
             </BrowserRouter>
-          </div> : <LoginPage />
+          </div> : <LoginPage loadSpotifyData={this.loadSpotifyData} />
         }
       </div>
     );
