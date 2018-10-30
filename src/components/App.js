@@ -85,63 +85,27 @@ class App extends Component {
   }
 
   render() {
-    let playlistsToRender =
-      this.state.user &&
-        this.state.playlists
-        ? this.state.playlists.filter(playlist => {
-          let matchesPlaylist = playlist.name.toLowerCase().includes(
-            this.state.filterString.toLowerCase())
-          let matchesSong = playlist.songs.find(song =>
-            song.name.toLowerCase().includes(this.state.filterString.toLowerCase()))
-          return matchesPlaylist || matchesSong
-        }).filter(playlist => {
-          let matcheRating;
-          if (this.state.filterRating !== 0) {
-            matcheRating = playlist.rating === this.state.filterRating
-            return matcheRating
-          } else {
-            matcheRating = playlist
-          }
-          return matcheRating
-        }) : []
     return (
       <div className="App">
         {this.state.user ?
           <div>
-            <h1 >
-              {this.state.user}'s playlist
-            </h1>
-            <DownloadPlaylist
-              playlists={this.state.playlists}
-            />
-            <PlaylistCounter
-              playlists={playlistsToRender}
-            />
-            <HoursCounter
-              playlists={playlistsToRender}
-            />
-            <Filter
-              onTextChange={text => this.setState({ filterString: text })}
-              updateFilteredRating={this.updateFilteredRating}
-              resetRateFiltering={this.resetRateFiltering}
-              ratingFilterValue={this.state.filterRating}
-            />
             <BrowserRouter>
-              <div>
-                <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    render={(props) => <PlaylistsListing {...props} playlists={playlistsToRender} />}
-                  />
-                  <Route
-                    exact
-                    path="/:playlistId"
-                    render={(props) => <PlaylistPage {...props} playlists={playlistsToRender} />}
-                  // component={PlaylistPage}
-                  />
-                </Switch>
-              </div>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => <PlaylistsListing {...props}
+                    data={this.state}
+                    addTag={this.addTag}
+                    addPlaylistRating={this.addPlaylistRating}
+                  />}
+                />
+                <Route
+                  exact
+                  path="/:playlistId"
+                  render={(props) => <PlaylistPage {...props} playlists={this.state.playlists} />}
+                />
+              </Switch>
             </BrowserRouter>
           </div> : <LoginPage loadSpotifyData={this.loadSpotifyData} />
         }

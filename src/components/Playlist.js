@@ -12,15 +12,15 @@ library.add(faStarSolid, faStarRegular)
 
 
 class Playlist extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
 
-  handleClick = () => {
+  handleButtonClick = () => {
     let playlist = this.props.playlist
     let playlistNameConcatenated = playlist.name.replace(/\//g, " ").split(" ").join('').toLowerCase()
     this.props.history.push(`/playlist=${playlist.index}-${playlistNameConcatenated}`)
+  }
+
+  handleRatingClick = (rating) => {
+    this.props.addPlaylistRating(this.props.playlist.index, rating)
   }
 
   render() {
@@ -48,7 +48,7 @@ class Playlist extends Component {
         </ul>
         {tagList}
         <div className="buttons">
-          <button className="cta" onClick={this.handleClick}>see playlist</button>
+          <button className="cta" onClick={this.handleButtonClick}>see playlist</button>
         </div>
         <TagManager addTag={this.props.addTag} index={this.props.index} />
         <Rating
@@ -56,7 +56,7 @@ class Playlist extends Component {
           emptySymbol={<FontAwesomeIcon icon={['far', 'star']} style={{ color: 'blue' }} />}
           fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} />}
           initialRating={playlist.rating}
-          onClick={this.handleClick}
+          onClick={this.handleRatingClick}
         />
       </div>
 
