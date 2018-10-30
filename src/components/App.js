@@ -21,13 +21,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      serverData: {},
-      filterString: '',
-      filterRating: 0,
     }
-
-    this.resetRateFiltering = this.resetRateFiltering.bind(this);
-    this.addPlaylistRating = this.addPlaylistRating.bind(this);
   }
 
   loadSpotifyData = (data) => {
@@ -49,16 +43,6 @@ class App extends Component {
     playlists.find(playlist => playlist.index === index).rating = rating
     console.log(playlists)
     this.setState({ playlists })
-  }
-
-  updateFilteredRating = (rating) => {
-    let filterRating = this.state.filterRating
-    filterRating = rating
-    this.setState({ filterRating })
-  }
-
-  resetRateFiltering = (event) => {
-    this.setState({ filterRating: 0 })
   }
 
   componentDidMount() {
