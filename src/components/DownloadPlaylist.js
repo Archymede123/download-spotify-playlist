@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
+import Button from './UI-components/Button'
 
 class DownloadPlaylist extends Component {
     render() {
@@ -20,7 +21,7 @@ class DownloadPlaylist extends Component {
                 < CSVLink data={playlistsToDownload}
                     filename={"my-file.csv"}
                     target="_blank" >
-                    Download playlists as CSV
+                    <Button content="Download playlist as CSV" />
                 </CSVLink >
             )
         }

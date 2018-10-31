@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
 //components
-import Playlist from './Playlist';
+import PlaylistCard from './PlaylistCard';
 import DownloadPlaylist from './DownloadPlaylist';
 import HoursCounter from './HoursCounter.js';
 import Filter from './Filter';
 import PlaylistCounter from './PlaylistCounter';
 
-class PlaylistsListing extends Component {
+//css 
+import '../css/Homepage.css';
+
+class Homepage extends Component {
     constructor() {
         super();
         this.state = {
@@ -51,28 +54,42 @@ class PlaylistsListing extends Component {
                     return matcheRating
                 }) : []
         return (
-            <div>
-                <h1 >
-                    {this.props.data.user}'s playlist
-                </h1>
-                <DownloadPlaylist
-                    playlists={this.props.data.playlists}
-                />
-                <PlaylistCounter
-                    playlists={playlistsToRender}
-                />
-                <HoursCounter
-                    playlists={playlistsToRender}
-                />
-                <Filter
-                    onTextChange={text => this.setState({ filterString: text })}
-                    updateFilteredRating={this.updateFilteredRating}
-                    resetRateFiltering={this.resetRateFiltering}
-                    ratingFilterValue={this.state.filterRating}
-                />
+            <div className="homepage">
+                <div className="homepage-header">
+                    <div className="pagetitle">
+                        <h1 className="title">Manage you Spotify Playlists</h1>
+                        <p className="subtitle">Rating, finding and playing playlists has never been so easy </p>
+                        <DownloadPlaylist
+                            playlists={this.props.data.playlists}
+                        />
+                    </div>
+                    <div className="searchbox">
+                        <Filter
+                            onTextChange={text => this.setState({ filterString: text })}
+                            updateFilteredRating={this.updateFilteredRating}
+                            resetRateFiltering={this.resetRateFiltering}
+                            ratingFilterValue={this.state.filterRating}
+                        />
+                    </div>
+                    <div className="userinfos">
+                        <div className="user-desc">
+                            <p className="usertype">user</p>
+                            <p className="username">{this.props.data.user[0]}</p>
+                        </div>
+                        <img className="user-pic" src={this.props.data.user[2]} alt="" />
+                    </div>
+                </div>
+                <div className="playlists-details">
+                    <PlaylistCounter
+                        playlists={playlistsToRender}
+                    />
+                    <HoursCounter
+                        playlists={playlistsToRender}
+                    />
+                </div>
                 <div className="playlistGrid">
                     {playlistsToRender.map((playlist, key) =>
-                        <Playlist
+                        <PlaylistCard
                             playlist={playlist}
                             addTag={this.props.addTag}
                             key={key}
@@ -88,4 +105,4 @@ class PlaylistsListing extends Component {
 }
 
 
-export default PlaylistsListing;
+export default Homepage;

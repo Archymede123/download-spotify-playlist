@@ -2,19 +2,11 @@
   text-align: center;
   background-color: #222;
   color: white;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 54px;
-  color: blue;
-  margin: 0;
-}
 
-.playlistGrid {
-  margin-top: 64px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 24px;
+p {
+  margin: 0px;
 }

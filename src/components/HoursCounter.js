@@ -10,10 +10,10 @@ class HoursCounter extends Component {
             return sum + eachSong.duration;
         }, 0)
         return (
-            <div style={{ width: '40%', display: 'inline-block' }}>
-                <h2>
+            <div className="hours-counter">
+                <p>
                     {Math.round(totalDuration / 60 / 60)} Hours
-        </h2>
+                </p>
             </div >
         );
     }

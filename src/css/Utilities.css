@@ -1,0 +1,21 @@
+/* button */
+
+.buttons .cta {
+    padding: 8px 32px;
+    background: #1DB954;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 30px;
+    color: white;
+    z-index: 3;
+}
+
+.buttons .cta:hover {
+    transform: scale(1.1);
+    transition: transform .2s ease-in-out;
+    transform-origin: center;
+}
+
+.buttons .cta:focus {
+    outline: none;
+}

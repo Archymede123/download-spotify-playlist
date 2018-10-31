@@ -4,11 +4,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // components 
-import PlaylistsListing from './PlaylistsListing'
-import DownloadPlaylist from './DownloadPlaylist';
-import HoursCounter from './HoursCounter.js';
-import Filter from './Filter';
-import PlaylistCounter from './PlaylistCounter';
+import Homepage from './Homepage'
 import LoginPage from './LoginPage';
 import PlaylistPage from './PlaylistPage';
 
@@ -78,7 +74,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/"
-                  render={(props) => <PlaylistsListing {...props}
+                  render={(props) => <Homepage {...props}
                     data={this.state}
                     addTag={this.addTag}
                     addPlaylistRating={this.addPlaylistRating}

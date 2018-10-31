@@ -25,9 +25,10 @@ class TagManager extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} id="submitForm">
+            <form onSubmit={this.handleSubmit} id="submitForm" className="tag-box">
                 <label>
-                    <input type="text"
+                    <input
+                        type="text"
                         value={this.state.tag}
                         name="tagInput"
                         className="tagInput"

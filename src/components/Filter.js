@@ -15,17 +15,23 @@ class Filter extends Component {
     render() {
         return (
             <div>
-                <input type="text" onKeyUp=
+                <p className="search-indication">Search a playlist</p>
+                <input className="search-input" type="text" onKeyUp=
                     {e => this.props.onTextChange(e.target.value)} />
 
-                <Rating
-                    {...this.props}
-                    emptySymbol={<FontAwesomeIcon icon={['far', 'star']} style={{ color: 'blue' }} />}
-                    fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} />}
-                    initialRating={this.props.ratingFilterValue}
-                    onClick={this.handleClick}
-                />
-                <button onClick={this.props.resetRateFiltering}>reset</button>
+                <div className="rating">
+                    <p className="search-indication">Filter playlists</p>
+                    <Rating
+                        className="stars"
+                        {...this.props}
+                        emptySymbol={<FontAwesomeIcon icon={['far', 'star']} />}
+                        fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} style={{ color: '#1DB954' }} />}
+                        initialRating={this.props.ratingFilterValue}
+                        onClick={this.handleClick}
+                    />
+                    <button className="reset-stars" onClick={this.props.resetRateFiltering}>reset</button>
+                </div>
+
             </div>
         );
     }

@@ -27,7 +27,8 @@ ul, li, h3, .tagInput {
 
 li, 
 tagList, 
-.playlist-rating span {
+.playlist-rating span,
+.playlist .search-indication {
     list-style-type: none;
     z-index: 3;
     opacity: 0;
@@ -35,18 +36,9 @@ tagList,
 
 .playlist:hover li,
 .playlist:hover tagList,
-.playlist:hover .playlist-rating span {
+.playlist:hover .playlist-rating span,
+.playlist:hover .search-indication {
     opacity: 1;
-}
-
-.playlist .cta {
-    padding: 8px 32px;
-    background: #1DB954;
-    border: none;
-    text-transform: uppercase;
-    border-radius: 30px;
-    color: white;
-    z-index: 3;
 }
 
 .playlist .buttons {
@@ -57,11 +49,7 @@ tagList,
     z-index: 3;
 }
 
-.playlist .cta:hover {
-    transform: scale(1.1);
-    transition: transform .2s ease-in-out;
-    transform-origin: center;
-}
+
 
 h3 {
     font-size: 1.5rem;

@@ -27,7 +27,7 @@ class LoginPage extends Component {
         if (this._isMounted) {
             fetchPlaylistInfos(accessToken).then(data => {
                 this.setState({
-                    user: [data.display_name]
+                    user: [data.display_name, data.followers.total, data.images[0].url]
                 })
             })
 

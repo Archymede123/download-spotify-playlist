@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 class PlaylistCounter extends Component {
     render() {
         return (
-            <div style={{ width: '40%', display: 'inline-block' }}>
-                <h2>
+            <div className="playlist-counter">
+                <p>
                     {this.props.playlists.length} playlists
-          </h2>
+                </p>
             </div >
         );
     }
