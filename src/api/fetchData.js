@@ -15,7 +15,7 @@ export function fetchPlaylistData(accessToken) {
             let playlists = playlistData.items
             let trackDataPromises = playlists.map(playlist => {
                 let responsePromise = [];
-                [0, 1, 2].forEach(page => {
+                [0].forEach(page => {
                     let responsePromiseDetails = fetch(`${playlist.tracks.href}?offset=${page}00`, {
                         headers: { 'Authorization': 'Bearer ' + accessToken }
                     }).then(response => response.json())

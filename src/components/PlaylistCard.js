@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //components
-import TagManager from './TagManager';
+// import TagManager from './TagManager';
 import Rating from 'react-rating';
 import Button from './UI-components/Button'
 

@@ -23,7 +23,8 @@ class App extends Component {
   loadSpotifyData = (data) => {
     this.setState({
       playlists: data.playlists,
-      user: data.user
+      user: data.user,
+      access_token: data.access_token
     })
   }
 
@@ -43,7 +44,6 @@ class App extends Component {
 
   componentDidMount() {
     const localStorageUserRef = localStorage.getItem('user')
-
     if (localStorageUserRef) {
       this.setState({ user: JSON.parse(localStorageUserRef) })
     }
@@ -51,6 +51,11 @@ class App extends Component {
     const localStoragePlaylistsRef = localStorage.getItem('playlists')
     if (localStoragePlaylistsRef) {
       this.setState({ playlists: JSON.parse(localStoragePlaylistsRef) })
+    }
+
+    const localStorageTokenRef = localStorage.getItem('token')
+    if (localStorageTokenRef) {
+      this.setState({ user: JSON.parse(localStorageTokenRef) })
     }
   }
 
@@ -62,9 +67,14 @@ class App extends Component {
     localStorage.setItem(
       "playlists",
       JSON.stringify(this.state.playlists))
+
+    localStorage.setItem(
+      "token",
+      JSON.stringify(this.state.access_token))
   }
 
   render() {
+    console.log(this.state.access_token)
     return (
       <div className="App">
         {this.state.user ?
@@ -83,7 +93,10 @@ class App extends Component {
                 <Route
                   exact
                   path="/:playlistId"
-                  render={(props) => <PlaylistPage {...props} playlists={this.state.playlists} />}
+                  render={(props) => <PlaylistPage {...props}
+                    playlists={this.state.playlists}
+                    access_token={this.state.access_token}
+                  />}
                 />
               </Switch>
             </BrowserRouter>

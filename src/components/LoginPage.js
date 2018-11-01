@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from './UI-components/Button';
+
 //css import
 import '../css/App.css';
 // js 
@@ -10,6 +12,7 @@ class LoginPage extends Component {
         this.state = {
             user: {},
             playlists: {},
+            access_token: ''
         }
     }
 
@@ -21,7 +24,9 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-        let accessToken = new URLSearchParams(window.location.search).get('access_token');
+        let accessToken = new URLSearchParams(window.location.search).get('access_token')
+        console.log(accessToken)
+        this.setState({ access_token: accessToken })
         if (!accessToken) return;
 
         if (this._isMounted) {
@@ -65,8 +70,8 @@ class LoginPage extends Component {
                 <p style={{ margin: 0 }}>You currently have no playlist loaded. Click the button
                     below to login to your spotify account
                 </p>
-                <button onClick={this.goToPlaylists}
-                    style={{ 'fontSize': '16px', 'padding': '16px 32px', 'backgroundColor': '#1CD156', 'marginTop': '64px' }}>Sign In with Spotify</button>
+                <Button content="Sign In with Spotify" onClick={this.goToPlaylists} />
+
             </div>
 
         );
