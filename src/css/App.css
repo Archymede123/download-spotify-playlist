@@ -10,3 +10,7 @@
 p {
   margin: 0px;
 }
+
+li {
+  list-style-type: none;
+}

@@ -38,7 +38,6 @@ class App extends Component {
   addPlaylistRating = (index, rating) => {
     let playlists = this.state.playlists
     playlists.find(playlist => playlist.index === index).rating = rating
-    console.log(playlists)
     this.setState({ playlists })
   }
 
@@ -53,9 +52,9 @@ class App extends Component {
       this.setState({ playlists: JSON.parse(localStoragePlaylistsRef) })
     }
 
-    const localStorageTokenRef = localStorage.getItem('token')
+    const localStorageTokenRef = localStorage.getItem('access_token')
     if (localStorageTokenRef) {
-      this.setState({ user: JSON.parse(localStorageTokenRef) })
+      this.setState({ access_token: JSON.parse(localStorageTokenRef) })
     }
   }
 
@@ -69,12 +68,11 @@ class App extends Component {
       JSON.stringify(this.state.playlists))
 
     localStorage.setItem(
-      "token",
+      "access_token",
       JSON.stringify(this.state.access_token))
   }
 
   render() {
-    console.log(this.state.access_token)
     return (
       <div className="App">
         {this.state.user ?

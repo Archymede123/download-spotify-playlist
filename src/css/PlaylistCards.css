@@ -25,7 +25,7 @@ ul, li, h3, .tagInput {
     z-index: 3;
 }
 
-li, 
+.playlist li, 
 tagList, 
 .playlist-rating span,
 .playlist .search-indication {
