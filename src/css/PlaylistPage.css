@@ -1,3 +1,9 @@
-/* .song-list {
-    color: white;
-} */
+.playlistPage .blindtest.playing {
+    display: block;
+    height: 500px;
+    background: red
+}
+
+.playlistPage .blindtest.hidden {
+    display: none;
+}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
+import className from 'classnames';
 import Button from './UI-components/Button';
+import Blindtest from './Blindtest'
 
 // css
 import '../css/PlaylistPage.css';
@@ -13,7 +15,8 @@ class PlaylistPage extends Component {
     constructor() {
         super();
         this.state = {
-            playlist: {}
+            playlist: {},
+            blindtestPlaying: false
         }
     }
 
@@ -29,6 +32,12 @@ class PlaylistPage extends Component {
         spotifyApi.play(uri)
     }
 
+    startBlindtest = () => {
+        this.setState({ blindtestPlaying: true })
+    }
+
+
+
     componentDidMount() {
         let playlistIndex = this.props.match.params.playlistId.match(/\d/)
         let playlist = this.props.playlists.find(playlist =>
@@ -40,19 +49,27 @@ class PlaylistPage extends Component {
 
     render() {
         let playlist = this.state.playlist
+        var blindTestClass = className({
+            blindtest: true,
+            playing: this.state.blindtestPlaying,
+            hidden: !this.state.blindtestPlaying
+        })
         return (
-            <div>
+            <div className="playlistPage">
                 <Button content="Back to playlist list" onClick={this.handleBackButton} />
                 <div>
                     <p>{playlist.name}</p>
                     <Button content="Play" onClick={this.triggerPlaylist} />
                 </div>
+                <Button content="start blindtest" onClick={this.startBlindtest} />
+                <div className={blindTestClass}>
+
+                </div>
+                <Blindtest access_token={this.props.access_token} />
                 {playlist.songs ?
-                    <div className="song-list"> {playlist.songs.map((song, key) =>
-                        <ul>
-                            <li key={key}>{song.name}</li>
-                        </ul>
-                    )} </div>
+                    <ul className="song-list"> {playlist.songs.map((song, key) =>
+                        <li key={key}>{song.name}</li>
+                    )} </ul>
                     : null
                 }
             </div>
