@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import className from 'classnames';
 import Button from './UI-components/Button';
-import Blindtest from './Blindtest'
+import BlindtestGame from './blindtest/BlindtestGame';
 
 // css
 import '../css/PlaylistPage.css';
+
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -36,7 +37,9 @@ class PlaylistPage extends Component {
         this.setState({ blindtestPlaying: true })
     }
 
-
+    finishBlindtest = () => {
+        this.setState({ blindtestPlaying: false })
+    }
 
     componentDidMount() {
         let playlistIndex = this.props.match.params.playlistId.match(/\d/)
@@ -50,7 +53,7 @@ class PlaylistPage extends Component {
     render() {
         let playlist = this.state.playlist
         var blindTestClass = className({
-            blindtest: true,
+            blindtestContainer: true,
             playing: this.state.blindtestPlaying,
             hidden: !this.state.blindtestPlaying
         })
@@ -63,9 +66,13 @@ class PlaylistPage extends Component {
                 </div>
                 <Button content="start blindtest" onClick={this.startBlindtest} />
                 <div className={blindTestClass}>
-
+                    <BlindtestGame
+                        access_token={this.props.access_token}
+                        closeGame={this.finishBlindtest}
+                    />
+                    {/* <Button className='close' content="close" onClick={this.finishBlindtest} /> */}
+                    {/* <Blindtest access_token={this.props.access_token} /> */}
                 </div>
-                <Blindtest access_token={this.props.access_token} />
                 {playlist.songs ?
                     <ul className="song-list"> {playlist.songs.map((song, key) =>
                         <li key={key}>{song.name}</li>

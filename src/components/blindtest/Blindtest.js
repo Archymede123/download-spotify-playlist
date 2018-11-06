@@ -7,34 +7,46 @@ const spotifyApi = new SpotifyWebApi();
 
 
 class Blindtest extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        let gameStarted = this.props.gameStarted
         this.state = {
             currentSong: "",
-            blindtestGuess: ""
+            blindtestGuess: "",
+            answerIsCorrect: false,
+            gameStarted: gameStarted
         }
     }
+
+    _isMounted = true
 
     playBlindtest = (event) => {
         this.setState({ blindtestGuess: event.currentTarget.value })
         spotifyApi.getMyCurrentPlaybackState()
             .then(response => {
-                console.log(response)
                 this.setState({ currentSong: response.item.name })
             })
-
     }
 
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
     }
-    // start game - 10 songs are playing
-    // play a song for 30 seconds
-    // if answer is correct, count 1 and play next song after 5 seconds
 
+    componentDidUpdate() {
+        if (this.state.blindtestGuess !== "" && this.state.currentSong.toLowerCase() === this.state.blindtestGuess.toLowerCase()) {
+            if (this._isMounted) {
+                this.props.updateScore()
+                this.setState({ blindtestGuess: "" })
+            }
+        }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
 
     render() {
-        let answerIsCorrect = this.state.currentSong.toLowerCase() === this.state.blindtestGuess.toLowerCase()
+        let answerIsCorrect = this.state.answerIsCorrect
         return (
             <div className="blindest">
                 <p>Try to guess the song now playing</p>

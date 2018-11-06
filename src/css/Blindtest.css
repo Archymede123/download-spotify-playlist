@@ -1,0 +1,14 @@
+.blindestGame div {
+    padding: 16px;
+}
+
+.playlistPage .blindtestContainer .close .cta {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+.blindestGame {
+    display: flex;
+    justify-content: center;
+}
