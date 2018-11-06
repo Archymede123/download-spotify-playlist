@@ -4,6 +4,7 @@ import className from 'classnames';
 import Button from './UI-components/Button';
 import BlindtestGame from './blindtest/BlindtestGame';
 
+
 // css
 import '../css/PlaylistPage.css';
 
@@ -25,12 +26,16 @@ class PlaylistPage extends Component {
         this.props.history.push(`/`)
     }
 
-    triggerPlaylist = () => {
+    playPlaylistTracks = () => {
 
         const uri = {
             "context_uri": this.state.playlist.uri,
         }
         spotifyApi.play(uri)
+    }
+
+    showPlaylists = () => {
+        spotifyApi.getCategories().then(response => console.log(response))
     }
 
     startBlindtest = () => {
@@ -62,7 +67,10 @@ class PlaylistPage extends Component {
                 <Button content="Back to playlist list" onClick={this.handleBackButton} />
                 <div>
                     <p>{playlist.name}</p>
-                    <Button content="Play" onClick={this.triggerPlaylist} />
+                    <Button content="Play" onClick={this.playPlaylistTracks} />
+                </div>
+                <div>
+                    <Button content="Discover" onClick={this.showPlaylists} />
                 </div>
                 <Button content="start blindtest" onClick={this.startBlindtest} />
                 <div className={blindTestClass}>
@@ -70,8 +78,6 @@ class PlaylistPage extends Component {
                         access_token={this.props.access_token}
                         closeGame={this.finishBlindtest}
                     />
-                    {/* <Button className='close' content="close" onClick={this.finishBlindtest} /> */}
-                    {/* <Blindtest access_token={this.props.access_token} /> */}
                 </div>
                 {playlist.songs ?
                     <ul className="song-list"> {playlist.songs.map((song, key) =>

@@ -14,7 +14,7 @@ class BlindtestGame extends Component {
         super()
         this.state = {
             gameStarted: false,
-            timeToGuess: 5,
+            timeToGuess: 60,
             score: 0
         }
     }
@@ -26,26 +26,30 @@ class BlindtestGame extends Component {
 
     startCounter = () => {
         let timeToGuess = this.state.timeToGuess
-        let interval = setInterval(() => {
-            timeToGuess -= 1
-            this.setState({ timeToGuess })
-            if (timeToGuess < 0) {
-                clearInterval(interval)
-                this.setState({
-                    gameStarted: false,
-                    timeToGuess: 5
-                })
-            }
-        }, 1000)
+        if (this.state.gameStarted) {
+            let interval = setInterval(() => {
+                timeToGuess -= 1
+                this.setState({ timeToGuess })
+                if (timeToGuess < 0) {
+                    clearInterval(interval)
+                    this.setState({
+                        gameStarted: false,
+                        timeToGuess: timeToGuess
+                    })
+                }
+            }, 1000)
+        }
+
     }
 
     updateScore = () => {
         let score = this.state.score
+        let timeToGuess = this.state.timeToGuess
         score += 1
         if (this.state.gameStarted) {
             this.setState({
                 score: score,
-                timeToGuess: 5,
+                timeToGuess,
                 gameStarted: false
             })
         }
@@ -65,7 +69,9 @@ class BlindtestGame extends Component {
                     <p>Are you fucking ready ?</p>
                     <Button content="yes, go go go" onClick={this.startGame} />
                     <div>
-                        <p>You have {this.state.timeToGuess} seconds to guess the song</p>
+                        {this.state.gameStarted &&
+                            <p>You have {this.state.timeToGuess} seconds to guess the song</p>
+                        }
                         <Blindtest
                             access_token={this.props.access_token}
                             updateScore={this.updateScore}
