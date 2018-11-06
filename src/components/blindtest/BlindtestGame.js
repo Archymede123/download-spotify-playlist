@@ -14,7 +14,7 @@ class BlindtestGame extends Component {
         super()
         this.state = {
             gameStarted: false,
-            timeToGuess: 120,
+            timeToGuess: 5,
             score: 0
         }
     }
@@ -24,26 +24,31 @@ class BlindtestGame extends Component {
         this.startCounter()
     }
 
-    updateScore = () => {
-        let score = this.state.score
-        score += 1
-        if (this.state.gameStarted) {
-            this.setState({
-                score: score
-            })
-        }
-    }
-
     startCounter = () => {
         let timeToGuess = this.state.timeToGuess
         let interval = setInterval(() => {
             timeToGuess -= 1
             this.setState({ timeToGuess })
-            if (timeToGuess <= 0) {
+            if (timeToGuess < 0) {
                 clearInterval(interval)
+                this.setState({
+                    gameStarted: false,
+                    timeToGuess: 5
+                })
             }
         }, 1000)
-        // this.setState({ gameStarted: false })
+    }
+
+    updateScore = () => {
+        let score = this.state.score
+        score += 1
+        if (this.state.gameStarted) {
+            this.setState({
+                score: score,
+                timeToGuess: 5,
+                gameStarted: false
+            })
+        }
     }
 
     render() {
@@ -59,18 +64,14 @@ class BlindtestGame extends Component {
                 <div className="game">
                     <p>Are you fucking ready ?</p>
                     <Button content="yes, go go go" onClick={this.startGame} />
-                    {this.state.gameStarted ?
-                        <div>
-                            <p>You have {this.state.timeToGuess} seconds to guess the song</p>
-                            <Blindtest
-                                access_token={this.props.access_token}
-                                updateScore={this.updateScore}
-                                gameStarted={this.state.gameStarted}
-                            />
-                        </div>
-                        : null
-                    }
-
+                    <div>
+                        <p>You have {this.state.timeToGuess} seconds to guess the song</p>
+                        <Blindtest
+                            access_token={this.props.access_token}
+                            updateScore={this.updateScore}
+                            gameStarted={this.state.gameStarted}
+                        />
+                    </div>
                 </div>
 
             </div>
