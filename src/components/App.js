@@ -7,9 +7,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Homepage from './Homepage'
 import LoginPage from './LoginPage';
 import PlaylistPage from './PlaylistPage';
+import BlindtestGame from './blindtest/BlindtestGame';
 
 // css
 import '../css/App.css';
+
 
 // import querystring from 'query-string';
 
@@ -90,9 +92,16 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/:playlistId"
+                  path="/playlist/:playlistId"
                   render={(props) => <PlaylistPage {...props}
                     playlists={this.state.playlists}
+                    access_token={this.state.access_token}
+                  />}
+                />
+                <Route
+                  exact
+                  path="/blindtest"
+                  render={(props) => <BlindtestGame {...props}
                     access_token={this.state.access_token}
                   />}
                 />

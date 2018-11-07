@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import Button from './UI-components/Button';
 import SpotifyWebApi from 'spotify-web-api-js';
+import Countdown from './Countdown'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -14,7 +15,8 @@ class Blindtest extends Component {
             currentSong: "",
             blindtestGuess: "",
             answerIsCorrect: false,
-            gameStarted: gameStarted
+            gameStarted,
+            timeToGuess: 500
         }
     }
 
@@ -28,6 +30,10 @@ class Blindtest extends Component {
                     this.setState({ currentSong: response.item.name })
                 })
         }
+    }
+
+    stopCountdown = () => {
+        this.setState({ gameStarted: false })
     }
 
     componentDidMount() {
@@ -47,6 +53,11 @@ class Blindtest extends Component {
                 this.setState({ blindtestGuess: "" })
             }
         }
+
+        // if (this.state.timeToGuess === 0) {
+        //     let gameStarted = !this.state.gameStarted
+        //     this.setState({ gameStarted })
+        // }
     }
 
     componentWillUnmount() {
@@ -59,6 +70,7 @@ class Blindtest extends Component {
             return (
                 <div>
                     <p>Try to guess the song now playing</p>
+                    <Countdown stopCountdown={this.stopCountdown} />
                     <input className="answer-input" type="text" onChange=
                         {this.playBlindtest} value={this.state.blindtestGuess} />
                 </div>

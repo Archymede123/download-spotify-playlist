@@ -6,6 +6,7 @@ import DownloadPlaylist from './DownloadPlaylist';
 import HoursCounter from './HoursCounter.js';
 import Filter from './Filter';
 import PlaylistCounter from './PlaylistCounter';
+import Button from './UI-components/Button'
 
 //css 
 import '../css/Homepage.css';
@@ -25,8 +26,12 @@ class Homepage extends Component {
         this.setState({ filterRating })
     }
 
-    resetRateFiltering = (event) => {
+    resetRateFiltering = () => {
         this.setState({ filterRating: 0 })
+    }
+
+    playBlindtest = () => {
+        this.props.history.push(`/blindtest`)
     }
 
     componentDidMount() {
@@ -62,6 +67,7 @@ class Homepage extends Component {
                         <DownloadPlaylist
                             playlists={this.props.data.playlists}
                         />
+                        <Button content="play blindtest" onClick={this.playBlindtest} />
                     </div>
                     <div className="searchbox">
                         <Filter

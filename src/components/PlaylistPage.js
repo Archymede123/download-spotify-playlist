@@ -38,12 +38,9 @@ class PlaylistPage extends Component {
         spotifyApi.getCategories().then(response => console.log(response))
     }
 
-    startBlindtest = () => {
-        this.setState({ blindtestPlaying: true })
-    }
-
-    finishBlindtest = () => {
-        this.setState({ blindtestPlaying: false })
+    toggleBlindtest = () => {
+        let blindtestPlaying = !this.state.blindtestPlaying
+        this.setState({ blindtestPlaying })
     }
 
     componentDidMount() {
@@ -72,11 +69,11 @@ class PlaylistPage extends Component {
                 <div>
                     <Button content="Discover" onClick={this.showPlaylists} />
                 </div>
-                <Button content="start blindtest" onClick={this.startBlindtest} />
+                <Button content="start blindtest" onClick={this.toggleBlindtest} />
                 <div className={blindTestClass}>
                     <BlindtestGame
                         access_token={this.props.access_token}
-                        closeGame={this.finishBlindtest}
+                        closeGame={this.toggleBlindtest}
                     />
                 </div>
                 {playlist.songs ?
