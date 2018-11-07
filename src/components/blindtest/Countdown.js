@@ -4,7 +4,7 @@ class Countdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timeToGuess: 10
+            timeToGuess: 30
         }
     }
 

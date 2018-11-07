@@ -53,11 +53,6 @@ class Blindtest extends Component {
                 this.setState({ blindtestGuess: "" })
             }
         }
-
-        // if (this.state.timeToGuess === 0) {
-        //     let gameStarted = !this.state.gameStarted
-        //     this.setState({ gameStarted })
-        // }
     }
 
     componentWillUnmount() {
@@ -66,18 +61,14 @@ class Blindtest extends Component {
     }
 
     render() {
-        if (this.state.gameStarted) {
-            return (
-                <div>
-                    <p>Try to guess the song now playing</p>
-                    <Countdown stopCountdown={this.stopCountdown} />
-                    <input className="answer-input" type="text" onChange=
-                        {this.playBlindtest} value={this.state.blindtestGuess} />
-                </div>
-            )
-        } else {
-            return null
-        }
+        return (
+            <div>
+                <p>Try to guess the song now playing</p>
+                <Countdown stopCountdown={this.stopCountdown} />
+                <input className="answer-input" type="text" onChange=
+                    {this.playBlindtest} value={this.state.blindtestGuess} />
+            </div>
+        )
     }
 }
 
