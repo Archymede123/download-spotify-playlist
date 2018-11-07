@@ -9,10 +9,14 @@ class Countdown extends Component {
     }
 
     startCountdown = () => {
-        setInterval(() => {
+        this.interval = setInterval(() => {
             let timeToGuess = this.state.timeToGuess
             timeToGuess -= 1
             this.setState({ timeToGuess })
+            if (timeToGuess < 1) {
+                clearInterval(this.interval)
+                this.props.stopCountdown()
+            }
         }, 1000)
     }
 
@@ -20,8 +24,9 @@ class Countdown extends Component {
         this.startCountdown()
     }
 
-    componentDidUpdate() {
-        (this.state.timeToGuess === 0) && this.props.stopCountdown()
+
+    componentWillUnmount() {
+        clearInterval(this.interval)
     }
 
     render() {

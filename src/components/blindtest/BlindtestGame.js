@@ -22,47 +22,7 @@ class BlindtestGame extends Component {
     startGame = () => {
         let gameStarted = !this.state.gameStarted
         this.setState({ gameStarted })
-        // this.startCounter()
     }
-
-    // startCounter = () => {
-    //     let interval = setInterval(() => {
-    //         let timeToGuess = this.state.timeToGuess
-    //         timeToGuess -= 1
-    //         this.setState({ timeToGuess })
-    //     }, 1000)
-    //     console.log(interval)
-    //     return interval
-    // }
-
-    // stopCounter = (interval) => {
-    //     clearInterval(interval)
-    //     this.setState({
-    //         gameStarted: false,
-    //         timeToGuess: 10
-    //     })
-    // }
-
-
-
-    // startCounter = () => {
-    //     let timeToGuess = this.state.timeToGuess
-    //     if (this.state.gameStarted) {
-    //         let interval = setInterval(() => {
-    //             timeToGuess -= 1
-    //             this.setState({ timeToGuess })
-    //             if (timeToGuess < 1) {
-    //                 clearInterval(interval)
-    //                 this.setState({
-    //                     gameStarted: false,
-    //                     timeToGuess: 10
-    //                 })
-    //             }
-    //         }, 1000)
-    //         console.log(interval)
-    //     }
-
-    // }
 
     updateScore = () => {
         let score = this.state.score
@@ -75,11 +35,6 @@ class BlindtestGame extends Component {
                 gameStarted: false
             })
         }
-    }
-
-    componentDidUpdate(prevStates) {
-        // prevStates.gameStarted === this.state.gameStarted && this.startCounter()
-        // this.state.timeToGuess === 0 && this.setState({ gameStarted: false })
     }
 
     render() {
@@ -96,9 +51,6 @@ class BlindtestGame extends Component {
                     <p>Are you fucking ready ?</p>
                     <Button content="yes, go go go" onClick={this.startGame} />
                     <div>
-                        {/* {this.state.gameStarted &&
-                            <p>You have {this.state.timeToGuess} seconds to guess the song</p>
-                        } */}
                         <Blindtest
                             access_token={this.props.access_token}
                             updateScore={this.updateScore}

@@ -78,45 +78,6 @@ class Blindtest extends Component {
         } else {
             return null
         }
-
-        // let answerIsCorrect = this.state.answerIsCorrect
-        // {this.state.gameStarted  
-        //     ? return (
-        //         <div>
-        //             <p>Try to guess the song now playing</p>
-        //             <input className="answer-input" type="text" onChange=
-        //                 {this.playBlindtest} value={this.state.blindtestGuess} />
-        //         </div>
-        //     )
-        //     : return (null)
-        // }
-
-        // return (
-        //     {this.state.gameStarted 
-        //         ? <div className="blindest">
-        //             {this.state.gameStarted &&
-        //                 <div>
-        //                     <p>Try to guess the song now playing</p>
-        //                     <input className="answer-input" type="text" onChange=
-        //                         {this.playBlindtest} value={this.state.blindtestGuess} />
-        //                 </div>
-        //             }
-
-        //             {/* {this.state.blindtestGuess !== "" ?
-        //             (answerIsCorrect
-        //                 ? <p>you're good</p>
-        //                 : <p>keep going</p>
-        //             )
-        //             : null
-        //         } */}
-        //         </div>
-
-        //     : null
-        // }
-
-        // );
-
-
     }
 }
 
