@@ -10,48 +10,53 @@ const spotifyApi = new SpotifyWebApi();
 class Blindtest extends Component {
     constructor(props) {
         super(props);
-        let gameStarted = this.props.gameStarted
+        let timeToGuess = this.props.timeToGuess / 1000
         this.state = {
             currentSong: "",
             blindtestGuess: "",
             answerIsCorrect: false,
-            gameStarted,
-            timeToGuess: 500
+            timeToGuess,
+            toggleSong: true
         }
     }
 
     _isMounted = true
 
+    getCurrentPlayedSong = () => {
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(response => {
+                this.setState({ currentSong: response.item.name })
+            })
+    }
+
     playBlindtest = (event) => {
         if (this._isMounted) {
             this.setState({ blindtestGuess: event.currentTarget.value })
-            spotifyApi.getMyCurrentPlaybackState()
-                .then(response => {
-                    this.setState({ currentSong: response.item.name })
-                })
+            this.getCurrentPlayedSong()
         }
     }
 
-    stopCountdown = () => {
-        this.setState({ gameStarted: false })
-    }
+
 
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
-        this.setState({ gameStarted: false })
+        this.getCurrentPlayedSong()
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.gameStarted !== this.props.gameStarted) {
-            let gameStarted = !this.state.gameStarted
-            this.setState({ gameStarted })
-        }
-
+    componentDidUpdate(prevProps, prevState) {
         if (this.state.blindtestGuess !== "" && this.state.currentSong.toLowerCase() === this.state.blindtestGuess.toLowerCase()) {
             if (this._isMounted) {
                 this.props.updateScore()
+                this.setState({ answerIsCorrect: true })
                 this.setState({ blindtestGuess: "" })
             }
+        }
+
+        if (prevProps.currentSong !== this.props.currentSong) {
+            this.setState({
+                toggleSong: !this.state.toggleSong,
+                answerIsCorrect: false
+            })
         }
     }
 
@@ -64,9 +69,17 @@ class Blindtest extends Component {
         return (
             <div>
                 <p>Try to guess the song now playing</p>
-                <Countdown stopCountdown={this.stopCountdown} />
-                <input className="answer-input" type="text" onChange=
-                    {this.playBlindtest} value={this.state.blindtestGuess} />
+                <Countdown
+                    timeToGuess={this.state.timeToGuess}
+                    key={this.state.toggleSong}
+                />
+                <input
+                    className="answer-input"
+                    type="text"
+                    onChange={this.playBlindtest}
+                    value={this.state.blindtestGuess}
+                    disabled={this.state.answerIsCorrect ? "disabled" : ""}
+                />
             </div>
         )
     }

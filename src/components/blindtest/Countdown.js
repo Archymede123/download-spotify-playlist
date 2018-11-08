@@ -3,21 +3,29 @@ import React, { Component } from 'react';
 class Countdown extends Component {
     constructor(props) {
         super(props);
+        let timeToGuess = this.props.timeToGuess
         this.state = {
-            timeToGuess: 30
+            timeToGuess,
+            remainingTime: timeToGuess
         }
     }
 
     startCountdown = () => {
         this.interval = setInterval(() => {
-            let timeToGuess = this.state.timeToGuess
-            timeToGuess -= 1
-            this.setState({ timeToGuess })
-            if (timeToGuess < 1) {
+            let remainingTime = this.state.remainingTime
+            remainingTime -= 1
+            this.setState({ remainingTime })
+            if (remainingTime < 1) {
                 clearInterval(this.interval)
-                this.props.stopCountdown()
+                // remainingTime = this.state.timeToGuess
+                // this.startCountdown()
             }
         }, 1000)
+    }
+
+    restartCountdown = () => {
+        clearInterval(this.interval)
+        this.startCountdown()
     }
 
     componentDidMount() {
@@ -31,7 +39,7 @@ class Countdown extends Component {
 
     render() {
         return (
-            <p>You have {this.state.timeToGuess} left, hurry up motherfucker</p>
+            <p>You have {this.state.remainingTime} left, hurry up motherfucker</p>
         );
     }
 }

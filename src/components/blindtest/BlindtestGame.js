@@ -3,7 +3,6 @@ import SpotifyWebApi from 'spotify-web-api-js';
 
 // my components
 import Button from '../UI-components/Button';
-import Blindtest from './Blindtest'
 import BlindtestSession from './BlindtestSession'
 import PlaylistPicker from './PlaylistPicker'
 
@@ -34,6 +33,12 @@ class BlindtestGame extends Component {
         this.setState({ gameStarted })
     }
 
+    endGame = () => {
+        let gameStarted = this.state.gameStarted
+        gameStarted = false
+        this.setState({ gameStarted })
+    }
+
     selectPlaylist = (playlist) => {
         this.setState({ playlistSelected: playlist })
     }
@@ -60,10 +65,6 @@ class BlindtestGame extends Component {
                     <div className="close">
                         <Button content="close" onClick={this.props.closeGame} />
                     </div>
-                    <div className="informations">
-                        <p>You currently have {this.state.score} points</p>
-                        <p>Previously played songs</p>
-                    </div>
                     <PlaylistPicker
                         selectPlaylist={this.selectPlaylist}
                         access_token={this.props.access_token}
@@ -71,13 +72,6 @@ class BlindtestGame extends Component {
                     <div className="game">
                         <p>Are you fucking ready ?</p>
                         <Button content="yes, go go go" onClick={this.startGame} />
-                        <div>
-                            {/* <Blindtest
-                                access_token={this.props.access_token}
-                                updateScore={this.updateScore}
-                                gameStarted={this.state.gameStarted}
-                            /> */}
-                        </div>
                     </div>
                 </div>
                 <div>
