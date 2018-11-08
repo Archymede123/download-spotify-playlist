@@ -17,8 +17,6 @@ class Countdown extends Component {
             this.setState({ remainingTime })
             if (remainingTime < 1) {
                 clearInterval(this.interval)
-                // remainingTime = this.state.timeToGuess
-                // this.startCountdown()
             }
         }, 1000)
     }
@@ -38,9 +36,16 @@ class Countdown extends Component {
     }
 
     render() {
-        return (
-            <p>You have {this.state.remainingTime} left, hurry up motherfucker</p>
-        );
+        if (this.props.answerIsCorrect) {
+            return (
+                <p>Good job, {this.state.remainingTime} before next song</p>
+            )
+        } else {
+            return (
+                <p>You have {this.state.remainingTime} left, hurry up motherfucker</p>
+            )
+        }
+
     }
 }
 

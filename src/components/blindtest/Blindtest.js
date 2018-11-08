@@ -72,6 +72,7 @@ class Blindtest extends Component {
                 <Countdown
                     timeToGuess={this.state.timeToGuess}
                     key={this.state.toggleSong}
+                    answerIsCorrect={this.state.answerIsCorrect}
                 />
                 <input
                     className="answer-input"

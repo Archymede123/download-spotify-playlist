@@ -24,21 +24,27 @@ class BlindtestSession extends Component {
             spotifyApi.getMyCurrentPlaybackState()
                 .then(response => {
                     let currentSong = response.item.name
-                    let songplayed = [...this.state.songplayed, currentSong]
-                    this.setState({
-                        songplayed,
-                        currentSong
-                    })
+                    this.setState({ currentSong })
+                    this.updateResultList(currentSong)
                 })
             this.toggleSong()
             spotifyApi.skipToNext()
         }, this.state.timeToGuess)
     }
 
+    updateResultList = (track) => {
+        if (!this.state.songplayed.includes(track)) {
+            let songplayed = [...this.state.songplayed, track]
+            this.setState({ songplayed })
+        }
+    }
+
     updateScore = () => {
         let score = this.state.score
         score += 1
         this.setState({ score })
+        spotifyApi.getMyCurrentPlaybackState()
+            .then(response => this.updateResultList(response.item.name))
     }
 
     toggleSong = () => {
