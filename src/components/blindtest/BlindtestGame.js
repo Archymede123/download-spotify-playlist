@@ -22,6 +22,10 @@ class BlindtestGame extends Component {
         }
     }
 
+    returnHome = () => {
+        this.props.history.push(`/`)
+    }
+
     startGame = () => {
         let gameStarted = !this.state.gameStarted
         if (this.state.playlistSelected) {
@@ -63,16 +67,20 @@ class BlindtestGame extends Component {
             <div>
                 <div className="blindestGame">
                     <div className="close">
-                        <Button content="close" onClick={this.props.closeGame} />
+                        <Button content="close" onClick={this.returnHome} />
                     </div>
                     <PlaylistPicker
                         selectPlaylist={this.selectPlaylist}
                         access_token={this.props.access_token}
                     />
-                    <div className="game">
-                        <p>Are you fucking ready ?</p>
-                        <Button content="yes, go go go" onClick={this.startGame} />
-                    </div>
+                    {this.state.playlistSelected &&
+                        <div className="game">
+                            <p>Are you fucking ready ?</p>
+                            <Button
+                                content={this.state.gameStarted ? "stop this now" : "yes, go go go"}
+                                onClick={this.state.gameStarted ? this.endGame : this.startGame} />
+                        </div>
+                    }
                 </div>
                 <div>
                     {this.state.gameStarted &&

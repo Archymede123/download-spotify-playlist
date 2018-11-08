@@ -23,10 +23,12 @@ class Blindtest extends Component {
     _isMounted = true
 
     getCurrentPlayedSong = () => {
-        spotifyApi.getMyCurrentPlaybackState()
-            .then(response => {
-                this.setState({ currentSong: response.item.name })
-            })
+        if (this._isMounted) {
+            spotifyApi.getMyCurrentPlaybackState()
+                .then(response => {
+                    this.setState({ currentSong: response.item.name })
+                })
+        }
     }
 
     playBlindtest = (event) => {
@@ -36,33 +38,33 @@ class Blindtest extends Component {
         }
     }
 
-
-
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
         this.getCurrentPlayedSong()
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.blindtestGuess !== "" && this.state.currentSong.toLowerCase() === this.state.blindtestGuess.toLowerCase()) {
-            if (this._isMounted) {
-                this.props.updateScore()
-                this.setState({ answerIsCorrect: true })
-                this.setState({ blindtestGuess: "" })
+        if (this._isMounted) {
+            if (this.state.blindtestGuess !== "" && this.state.currentSong.toLowerCase() === this.state.blindtestGuess.toLowerCase()) {
+                if (this._isMounted) {
+                    this.props.updateScore()
+                    this.setState({ answerIsCorrect: true })
+                    this.setState({ blindtestGuess: "" })
+                }
+            }
+
+            if (prevProps.currentSong !== this.props.currentSong) {
+                this.setState({
+                    toggleSong: !this.state.toggleSong,
+                    answerIsCorrect: false
+                })
             }
         }
 
-        if (prevProps.currentSong !== this.props.currentSong) {
-            this.setState({
-                toggleSong: !this.state.toggleSong,
-                answerIsCorrect: false
-            })
-        }
     }
 
     componentWillUnmount() {
         this._isMounted = false
-        this.setState({ gameStarted: false })
     }
 
     render() {

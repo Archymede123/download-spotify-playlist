@@ -12,9 +12,9 @@ class BlindtestSession extends Component {
         this.state = {
             score: 0,
             songplayed: [],
-            blindtestLength: 10,
+            blindtestLength: 3,
             sessionEnded: false,
-            timeToGuess: 30000,
+            timeToGuess: 10000,
             currentSong: ""
         }
     }
