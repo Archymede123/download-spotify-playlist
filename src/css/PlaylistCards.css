@@ -41,7 +41,7 @@ tagList,
     opacity: 1;
 }
 
-.playlist .buttons {
+.playlist .button-container {
     position: absolute;
     bottom: 16px;
     left: 50%;
@@ -49,11 +49,12 @@ tagList,
     z-index: 3;
 }
 
-
-
 h3 {
     font-size: 1.5rem;
     color: #fdfdfd;
     text-transform: uppercase;
 }
 
+.selected {
+    border: 8px solid #1DB954;
+}

@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
-import Button from './UI-components/Button';
-import SpotifyWebApi from 'spotify-web-api-js';
-import '../css/App.css';
+import React, { Component } from 'react'
+import Button from './UI-components/Button'
+import SpotifyWebApi from 'spotify-web-api-js'
+
+//css 
+import '../css/App.css'
+import '../css/login.css'
+//js 
 import { fetchPlaylistInfos, fetchPlaylistData } from '../api/fetchData'
 
 const spotifyApi = new SpotifyWebApi();
@@ -89,11 +93,11 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div>
-                <p style={{ margin: 0 }}>You currently have no playlist loaded. Click the button
-                    below to login to your spotify account
+            <div className="loginpage">
+                <img src={require("../images/logo.png")} alt="logo" className='logo' />
+                <p className="baseline">Connectez vous avec Spotify pour trouver des nouvelles playlists et jouer au blindtest
                 </p>
-                <Button content="Sign In with Spotify" onClick={this.goToPlaylists} />
+                <Button content="Se connecter avec Spotify" onClick={this.goToPlaylists} />
             </div>
 
         );

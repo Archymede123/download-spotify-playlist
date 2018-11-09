@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
+
+// my components 
+// import PlaylistCard from '../PlaylistCard';
+import PlaylistPickerCards from './PlaylistPickerCards'
+
 // content
 import spotifyPlaylists from './SpotifyPlaylists'
 
@@ -10,50 +15,55 @@ class PlaylistPicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            spotifyPlaylists
+            spotifyPlaylists,
+            playlistsToRender: []
         }
     }
 
-    handleChange = (event) => {
-        let selectedOption = event.target
-        let name = selectedOption.options[selectedOption.selectedIndex].getAttribute('name')
-        let uri = selectedOption.value
-        let id = uri.match(/[^:]*$/)
-        let playlist = {
-            name,
-            uri,
-            id
-        }
-        this.setState({ playlist })
-        this.props.selectPlaylist(playlist)
-        this.fetchPlaylist(playlist.id)
+    selectPlaylist = (selectedPlaylist) => {
+        this.setState({ selectedPlaylist })
+        this.props.selectPlaylist(selectedPlaylist)
     }
-
-    fetchPlaylist = (playlistId) => {
-        spotifyApi.getPlaylist(playlistId).then(response => {
-            let playlistLength = response.tracks.items.length
-            this.setState({ playlistLength })
-        })
-    }
-
 
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
+        spotifyPlaylists.map(playlist => {
+            let id = playlist.uri.match(/[^:]*$/)
+            return spotifyApi.getPlaylist(id)
+                .then(response => {
+                    let tracks = response.tracks.items.map(track => {
+                        let trackData = { name: track.track.name }
+                        return trackData
+                    })
+
+                    let playlist = {
+                        imageUrl: response.images[0].url,
+                        name: response.name,
+                        songs: tracks,
+                        uri: response.uri
+                    }
+                    let playlistsToRender = [...this.state.playlistsToRender, playlist]
+                    this.setState({ playlistsToRender })
+                })
+        })
     }
 
     render() {
         return (
-            <div>
-                <p>Select a playlist from the list</p>
-                <select name="playlistList" id="playlistList" onChange={this.handleChange}>
-                    <option value="placeholder"> -- select an option -- </option>
-                    {this.state.spotifyPlaylists.map((playlist, key) =>
-                        <option key={key} name={playlist.name} value={playlist.uri}>{playlist.name}</option>
+            <div className="playlist-picker">
+                <p>Choisi une super playlist, bouge ton cul trou de balle</p>
+                <div className="playlistGrid">
+                    {this.state.playlistsToRender.map((playlist, key) =>
+                        <PlaylistPickerCards
+                            playlist={playlist}
+                            key={key}
+                            index={key}
+                            history={this.props.history}
+                            selectPlaylist={this.selectPlaylist}
+                            selectedPlaylist={this.state.selectedPlaylist}
+                        />
                     )}
-                </select>
-                {this.state.playlistLength &&
-                    <p>There are {this.state.playlistLength} tracks in this playlist</p>
-                }
+                </div>
             </div>
         );
     }

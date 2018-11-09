@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
+import className from 'classnames';
 
 // my components
 import Button from '../UI-components/Button';
 import BlindtestSession from './BlindtestSession'
 import PlaylistPicker from './PlaylistPicker'
+
 
 // css
 import '../../css/Blindtest.css';
@@ -63,16 +65,22 @@ class BlindtestGame extends Component {
     }
 
     render() {
+        var blindestGameClass = className({
+            selectPlaylist: true,
+            hidden: this.state.gameStarted
+        })
         return (
             <div>
                 <div className="blindestGame">
                     <div className="close">
-                        <Button content="close" onClick={this.returnHome} />
+                        <Button content="retour à la maison" onClick={this.returnHome} />
                     </div>
-                    <PlaylistPicker
-                        selectPlaylist={this.selectPlaylist}
-                        access_token={this.props.access_token}
-                    />
+                    <div className={blindestGameClass}>
+                        <PlaylistPicker
+                            selectPlaylist={this.selectPlaylist}
+                            access_token={this.props.access_token}
+                        />
+                    </div>
                     {this.state.playlistSelected &&
                         <div className="game">
                             <p>Are you fucking ready ?</p>

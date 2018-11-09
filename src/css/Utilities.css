@@ -1,6 +1,6 @@
 /* button */
 
-.buttons .cta {
+.button {
     padding: 8px 32px;
     background: #1DB954;
     border: none;
@@ -10,12 +10,12 @@
     z-index: 3;
 }
 
-.buttons .cta:hover {
+.button:hover {
     transform: scale(1.1);
     transition: transform .2s ease-in-out;
     transform-origin: center;
 }
 
-.buttons .cta:focus {
+.button:focus {
     outline: none;
 }

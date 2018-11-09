@@ -62,12 +62,8 @@ class Homepage extends Component {
             <div className="homepage">
                 <div className="homepage-header">
                     <div className="pagetitle">
-                        <h1 className="title">Manage you Spotify Playlists</h1>
-                        <p className="subtitle">Rating, finding and playing playlists has never been so easy </p>
-                        <DownloadPlaylist
-                            playlists={this.props.data.playlists}
-                        />
-                        <Button content="play blindtest" onClick={this.playBlindtest} />
+                        <h1 className="title">Des playlist encore plus mieux</h1>
+                        <p className="subtitle">Jouez avec la musique, c'est super </p>
                     </div>
                     <div className="searchbox">
                         <Filter
@@ -86,12 +82,17 @@ class Homepage extends Component {
                     </div>
                 </div>
                 <div className="playlists-details">
+                    <Button content="un blindtest ?" onClick={this.playBlindtest} />
                     <PlaylistCounter
                         playlists={playlistsToRender}
                     />
                     <HoursCounter
                         playlists={playlistsToRender}
                     />
+                    <DownloadPlaylist
+                        playlists={this.props.data.playlists}
+                    />
+
                 </div>
                 <div className="playlistGrid">
                     {playlistsToRender.map((playlist, key) =>

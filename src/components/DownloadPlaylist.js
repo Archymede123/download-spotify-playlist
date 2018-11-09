@@ -20,7 +20,8 @@ class DownloadPlaylist extends Component {
             return (
                 < CSVLink data={playlistsToDownload}
                     filename={"my-file.csv"}
-                    target="_blank" >
+                    target="_blank"
+                    className="download-CSV" >
                     <Button content="Download playlist as CSV" />
                 </CSVLink >
             )
