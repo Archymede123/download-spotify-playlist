@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import className from 'classnames';
 import Button from './UI-components/Button';
-import Blindtest from './Blindtest'
+import BlindtestGame from './blindtest/BlindtestGame';
+
 
 // css
 import '../css/PlaylistPage.css';
+
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -24,7 +26,7 @@ class PlaylistPage extends Component {
         this.props.history.push(`/`)
     }
 
-    triggerPlaylist = () => {
+    playPlaylistTracks = () => {
 
         const uri = {
             "context_uri": this.state.playlist.uri,
@@ -32,11 +34,14 @@ class PlaylistPage extends Component {
         spotifyApi.play(uri)
     }
 
-    startBlindtest = () => {
-        this.setState({ blindtestPlaying: true })
+    showPlaylists = () => {
+        spotifyApi.getCategories().then(response => console.log(response))
     }
 
-
+    toggleBlindtest = () => {
+        let blindtestPlaying = !this.state.blindtestPlaying
+        this.setState({ blindtestPlaying })
+    }
 
     componentDidMount() {
         let playlistIndex = this.props.match.params.playlistId.match(/\d/)
@@ -50,7 +55,7 @@ class PlaylistPage extends Component {
     render() {
         let playlist = this.state.playlist
         var blindTestClass = className({
-            blindtest: true,
+            blindtestContainer: true,
             playing: this.state.blindtestPlaying,
             hidden: !this.state.blindtestPlaying
         })
@@ -59,13 +64,18 @@ class PlaylistPage extends Component {
                 <Button content="Back to playlist list" onClick={this.handleBackButton} />
                 <div>
                     <p>{playlist.name}</p>
-                    <Button content="Play" onClick={this.triggerPlaylist} />
+                    <Button content="Play" onClick={this.playPlaylistTracks} />
                 </div>
-                <Button content="start blindtest" onClick={this.startBlindtest} />
+                <div>
+                    <Button content="Discover" onClick={this.showPlaylists} />
+                </div>
+                <Button content="start blindtest" onClick={this.toggleBlindtest} />
                 <div className={blindTestClass}>
-
+                    <BlindtestGame
+                        access_token={this.props.access_token}
+                        closeGame={this.toggleBlindtest}
+                    />
                 </div>
-                <Blindtest access_token={this.props.access_token} />
                 {playlist.songs ?
                     <ul className="song-list"> {playlist.songs.map((song, key) =>
                         <li key={key}>{song.name}</li>

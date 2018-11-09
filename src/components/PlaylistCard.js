@@ -23,7 +23,7 @@ class PlaylistCard extends Component {
   handleButtonClick = () => {
     let playlist = this.props.playlist
     let playlistNameConcatenated = playlist.name.replace(/\//g, " ").split(" ").join('').toLowerCase()
-    this.props.history.push(`/playlist=${playlist.index}-${playlistNameConcatenated}`)
+    this.props.history.push(`/playlist/playlist=${playlist.index}-${playlistNameConcatenated}`)
   }
 
   handleRatingClick = (rating) => {

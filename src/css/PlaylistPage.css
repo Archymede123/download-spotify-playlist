@@ -1,9 +1,19 @@
-.playlistPage .blindtest.playing {
+.playlistPage .blindtestContainer.playing {
     display: block;
     height: 500px;
     background: red
 }
 
-.playlistPage .blindtest.hidden {
+.playlistPage .blindtestContainer.hidden {
     display: none;
+}
+
+.playlistPage .blindtestContainer {
+    position: relative;
+}
+
+.playlistPage .blindtestContainer .close .cta {
+    position: absolute;
+    top: 10%;
+    right: 10%;
 }
