@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 //components
 import PlaylistCard from './PlaylistCard';
 import DownloadPlaylist from './DownloadPlaylist';
-import HoursCounter from './HoursCounter.js';
+// import HoursCounter from './HoursCounter.js';
 import Filter from './Filter';
-import PlaylistCounter from './PlaylistCounter';
+// import PlaylistCounter from './PlaylistCounter';
 import Button from './UI-components/Button'
 
 //css 
@@ -34,9 +34,9 @@ class Homepage extends Component {
         this.props.history.push(`/blindtest`)
     }
 
-    componentDidMount() {
-        this.props.history.push(`/`)
-    }
+    // componentDidMount() {
+    //     this.props.history.push(`/`)
+    // }
 
     render() {
         let playlistsToRender =
@@ -83,12 +83,12 @@ class Homepage extends Component {
                 </div>
                 <div className="playlists-details">
                     <Button content="un blindtest ?" onClick={this.playBlindtest} />
-                    <PlaylistCounter
+                    {/* <PlaylistCounter
                         playlists={playlistsToRender}
                     />
                     <HoursCounter
                         playlists={playlistsToRender}
-                    />
+                    /> */}
                     <DownloadPlaylist
                         playlists={this.props.data.playlists}
                     />

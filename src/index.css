@@ -6,3 +6,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'nikoleta';
+  src: url(./fonts/NIKOLETA.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'arial-narrow';
+  src: url(./fonts/Arial\ Narrow.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'arial-black';
+  src: url(./fonts/Arial\ Black.ttf) format('ttf');
+}

@@ -83,7 +83,7 @@ class App extends Component {
               <Switch>
                 <Route
                   exact
-                  path="/"
+                  path="/home"
                   render={(props) => <Homepage {...props}
                     data={this.state}
                     addTag={this.addTag}
@@ -100,7 +100,7 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/blindtest"
+                  path="/"
                   render={(props) => <BlindtestGame {...props}
                     access_token={this.state.access_token}
                   />}

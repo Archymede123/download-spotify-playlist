@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import Button from './UI-components/Button'
+import BoxBorder from './UI-components/BoxBorder'
 import SpotifyWebApi from 'spotify-web-api-js'
 
 //css 
 import '../css/App.css'
 import '../css/login.css'
+
 //js 
 import { fetchPlaylistInfos, fetchPlaylistData } from '../api/fetchData'
 
@@ -92,14 +94,21 @@ class LoginPage extends Component {
     }
 
     render() {
+        const buttonWidth = {
+            width: '90%',
+        }
         return (
-            <div className="loginpage">
-                <img src={require("../images/logo.png")} alt="logo" className='logo' />
-                <p className="baseline">Connectez vous avec Spotify pour trouver des nouvelles playlists et jouer au blindtest
+            <BoxBorder className={'loginpage'}>
+                <img
+                    src={require("../images/logo.png")}
+                    alt="logo"
+                    className='logo'
+                    sizes='' />
+                <p className="baseline">Connecte toi à Spotify, tu verras ça va être super
                 </p>
-                <Button content="Se connecter avec Spotify" onClick={this.goToPlaylists} />
-            </div>
+                <Button content="Se connecter" onClick={this.goToPlaylists} style={buttonWidth} />
 
+            </BoxBorder>
         );
     }
 }

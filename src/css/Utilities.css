@@ -1,21 +1,100 @@
 /* button */
 
+body {
+    --color-primary: #DA5B55;
+    --color-secondary: #007D0F;
+}
+
 .button {
     padding: 8px 32px;
-    background: #1DB954;
+    background: var(--color-primary);
     border: none;
+    font-family: nikoleta;
     text-transform: uppercase;
-    border-radius: 30px;
+    letter-spacing: 1px;
     color: white;
+    font-size: 16px;
     z-index: 3;
+    position: relative;
+    height: 40px;
 }
 
 .button:hover {
-    transform: scale(1.1);
-    transition: transform .2s ease-in-out;
-    transform-origin: center;
+    background: transparent;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.button:after, 
+.button:before {
+    content: "";
+    position: absolute;
+    height: 0px;
+    width: 0px;
+}
+
+.button:hover:after,
+.button:hover:before {
+    height: 16px;
+    width: 16px;
+}
+
+.button:hover:after {
+    top: 0;
+    right: 0;
+    border-top: 4px solid var(--color-primary);
+    border-right: 4px solid var(--color-primary);
+    transition: border-top .2s ease-in-out;
+}
+
+.button:hover:before {
+    bottom: 0;
+    left: 0;
+    border-bottom: 4px solid var(--color-primary);
+    border-left: 4px solid var(--color-primary);
+    transition: border-bottom .2s ease-in-out;
 }
 
 .button:focus {
     outline: none;
+}
+
+/* box border */
+
+.box-top-right-border {
+    position: relative;
+}
+
+.box-top-right-border:before,
+.box-top-right-border:after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    transition: height .2s ease-in-out, 
+                width .2s ease-in-out;
+}
+
+.box-top-right-border:after {
+    height: 8px;
+    width: 10%;
+    background: var(--color-primary);
+}
+
+.box-top-right-border:before {
+    height: 10%;
+    width: 8px;
+    background: var(--color-primary);
+}
+
+.box-top-right-border:hover:after {
+    height: 8px;
+    width: 15%;
+    background: var(--color-primary);
+}
+
+.box-top-right-border:hover:before {
+    height: 15%;
+    width: 8px;
+    background: var(--color-primary);
 }
