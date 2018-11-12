@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import Button from './UI-components/Button';
-import SpotifyWebApi from 'spotify-web-api-js';
-import '../css/App.css';
+import React, { Component } from 'react'
+import Button from './UI-components/Button'
+import BoxBorder from './UI-components/BoxBorder'
+import SpotifyWebApi from 'spotify-web-api-js'
+
+//css 
+import '../css/App.css'
+import '../css/login.css'
+
+//js 
 import { fetchPlaylistInfos, fetchPlaylistData } from '../api/fetchData'
 
 const spotifyApi = new SpotifyWebApi();
@@ -88,14 +94,21 @@ class LoginPage extends Component {
     }
 
     render() {
+        const buttonWidth = {
+            width: '90%',
+        }
         return (
-            <div>
-                <p style={{ margin: 0 }}>You currently have no playlist loaded. Click the button
-                    below to login to your spotify account
+            <BoxBorder className={'loginpage'}>
+                <img
+                    src={require("../images/logo.png")}
+                    alt="logo"
+                    className='logo'
+                    sizes='' />
+                <p className="baseline">Connecte toi à Spotify, tu verras ça va être super
                 </p>
-                <Button content="Sign In with Spotify" onClick={this.goToPlaylists} />
-            </div>
+                <Button content="Se connecter" onClick={this.goToPlaylists} style={buttonWidth} />
 
+            </BoxBorder>
         );
     }
 }

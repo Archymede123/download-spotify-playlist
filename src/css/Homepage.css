@@ -9,21 +9,24 @@
 
 .pagetitle {
     text-align: left;
-    /* font-family: roboto-mono; */
+    flex: 1 0 20%;
+    padding-right: 16px;
 }
 
 .pagetitle .title {
-    font-size: 32px;
+    font-size: 1.8rem;
     font-weight: 700;
+    margin: 8px;
 }
 
 .pagetitle .subtitle {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
     margin-bottom: 32px;
 }
 
 .userinfos {
+    flex: 1 0 20%;
     display: flex;
 }
 
@@ -55,8 +58,15 @@
 }
 
 .playlists-details {
-    border-bottom: 1px solid #ffffff30
+    border-bottom: 1px solid #ffffff30;
+    position: relative;
 }
+
+.playlists-details .button-container {
+    margin-bottom: 16px;
+}
+
+
 
 .playlists-details .playlist-counter, 
 .playlists-details .hours-counter {
@@ -72,6 +82,12 @@
     padding-right: 32px;
 }
 
+.playlists-details .download-CSV {
+    position: absolute;
+    right: 32px;
+    bottom: 16px;
+}
+
 .playlistGrid {
   margin-top: 8px;
   display: grid;
@@ -80,6 +96,7 @@
 }
 
 .searchbox {
+    flex: 1 0 50%;
     display: flex;
     flex-direction: column;
     margin-top: 32px;

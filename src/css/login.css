@@ -1,0 +1,19 @@
+.loginpage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    background-color: #00000052;
+    padding: 16px
+}
+
+.loginpage .logo {
+    width: 80%;
+    padding: 32px 0;
+}
+
+.loginpage .baseline {
+    padding-bottom: 32px;
+    font-family: arial-narrow
+}

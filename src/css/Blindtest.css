@@ -9,11 +9,15 @@
 }
 
 .blindestGame {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
 }
 
 .blindtest-session {
     display: flex;
     justify-content: center;
+}
+
+.hidden {
+    display: none;
 }

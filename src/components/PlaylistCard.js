@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 // import TagManager from './TagManager';
 import Rating from 'react-rating';
 import Button from './UI-components/Button'
+import PlaylistCardTop from './PlaylistCardTop'
 
 //fontawsome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -32,29 +33,25 @@ class PlaylistCard extends Component {
 
   render() {
     let playlist = this.props.playlist;
-    let hasTags = playlist.tags === undefined ? false : true
-    let tagList;
+    // let hasTags = playlist.tags === undefined ? false : true
+    // let tagList;
 
-    if (hasTags) {
-      tagList =
-        <div className='tagList'> Tags:
-            {playlist.tags.map(tag =>
-            <span>{`${tag} `}</span>
-          )}
-        </div>
-    }
+    // if (hasTags) {
+    //   tagList =
+    //     <div className='tagList'> Tags:
+    //         {playlist.tags.map(tag =>
+    //         <span>{`${tag} `}</span>
+    //       )}
+    //     </div>
+    // }
 
     return (
-      <div className="playlist">
-        <img src={playlist.imageUrl} alt="playlist" />
-        <h3>{playlist.name}</h3>
-        <ul>
-          {playlist.songs.slice(0, 3).map((song, key) =>
-            <li key={key}>{song.name}</li>
-          )}
-        </ul>
-        {tagList}
-        <Button onClick={this.handleButtonClick} content="see playlist" />
+      <PlaylistCardTop playlist={playlist}>
+        <Button
+          onClick={this.handleButtonClick}
+          content="voir la playlist"
+          className="center"
+        />
         {/* <TagManager addTag={this.props.addTag} index={this.props.index} /> */}
         <p className="search-indication">add a rating</p>
         <Rating
@@ -64,7 +61,32 @@ class PlaylistCard extends Component {
           initialRating={playlist.rating}
           onClick={this.handleRatingClick}
         />
-      </div>
+      </PlaylistCardTop>
+
+      // <div className="playlist">
+      //   <img src={playlist.imageUrl} alt="playlist" />
+      //   <h3>{playlist.name}</h3>
+      //   <ul>
+      //     {playlist.songs.slice(0, 3).map((song, key) =>
+      //       <li key={key}>{song.name}</li>
+      //     )}
+      //   </ul>
+      //   {tagList}
+      //   <Button
+      //     onClick={this.handleButtonClick}
+      //     content="voir la playlist"
+      //     className="center"
+      //   />
+      //   {/* <TagManager addTag={this.props.addTag} index={this.props.index} /> */}
+      //   <p className="search-indication">add a rating</p>
+      //   <Rating
+      //     className="playlist-rating"
+      //     emptySymbol={<FontAwesomeIcon icon={['far', 'star']} />}
+      //     fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} style={{ color: '#1DB954' }} />}
+      //     initialRating={playlist.rating}
+      //     onClick={this.handleRatingClick}
+      //   />
+      // </div>
 
     );
   }
