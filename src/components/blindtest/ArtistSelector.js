@@ -23,7 +23,7 @@ class AristSelector extends Component {
                 imageUrl
             }
             let artistSelection = [...this.state.artistSelection, currentArtist]
-            this.setState({ artistSelection })
+            this.setState({ artistSelection: shuffle(artistSelection) })
         }
         )
     }
@@ -38,7 +38,7 @@ class AristSelector extends Component {
                         imageUrl,
                         popularity: artist.popularity
                     }]
-                    return this.setState({ artistSelection })
+                    return this.setState({ artistSelection: shuffle(artistSelection) })
                 })
             })
     }
@@ -51,10 +51,14 @@ class AristSelector extends Component {
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
-    //     // if (nextState.userCanSelect !== this.state.userCanSelect) {
-    //     //     return false
-    //     // } return true;
-    //     return this.state.userCanSelect !== nextState.userCanSelect
+    //     if (this.state.userCanSelect !== nextState.userCanSelect) {
+    //         return false
+    //     } if (this.props.currentData !== nextProps.currentData) {
+    //         return false
+    //     }
+    //     else {
+    //         return true;
+    //     }
     // }
 
     componentDidUpdate(prevProps) {
@@ -73,7 +77,7 @@ class AristSelector extends Component {
         this.getArtistImage(this.props.currentData.artist.id)
     }
     render() {
-        let artists = shuffle(this.state.artistSelection)
+        let artists = this.state.artistSelection
         return (
             <div>
                 <p>L'artiste est ...</p>
