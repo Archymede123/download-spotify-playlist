@@ -3,13 +3,14 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import className from 'classnames';
 
 // my components
-import Button from '../UI-components/Button';
+
 import BlindtestSession from './BlindtestSession'
 import PlaylistPicker from './PlaylistPicker'
 
 
 // css
 import '../../css/Blindtest.css';
+import '../../css/BlindtestGame.css'
 
 
 const spotifyApi = new SpotifyWebApi();
@@ -62,6 +63,8 @@ class BlindtestGame extends Component {
 
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
+
+        this.props.history.push(`/`)
     }
 
     render() {
@@ -71,22 +74,43 @@ class BlindtestGame extends Component {
         })
         return (
             <div>
-                <div className="blindestGame">
-                    <div className="close">
-                        <Button content="retour à la maison" onClick={this.returnHome} />
+                <div className="playlistPicker">
+                    <div className="header">
+                        <div className="logo-container">
+                            <img
+                                src={require("../../images/logo64.png")}
+                                alt="logo"
+                                className='logo'
+                            />
+                        </div>
+                        <div className="titles">
+                            <h1 className='main-title'>Choisi une playlist</h1>
+                            <h3 className='subtitle'>Cherche parmi les playlist spotify disponibles ou les tiennes</h3>
+                        </div>
+                        <div className="userinfos">
+                            <div className="user-desc">
+                                <p className="usertype">user</p>
+                                <p className="username">{this.props.data.user[0]}</p>
+                            </div>
+                            <img className="user-pic" src={this.props.data.user[2]} alt="" />
+                        </div>
                     </div>
                     <div className={blindestGameClass}>
                         <PlaylistPicker
                             selectPlaylist={this.selectPlaylist}
                             access_token={this.props.access_token}
+                            data={this.props.data}
                         />
                     </div>
                     {this.state.playlistSelected &&
-                        <div className="game">
-                            <p>Are you fucking ready ?</p>
-                            <Button
-                                content={this.state.gameStarted ? "stop this now" : "yes, go go go"}
-                                onClick={this.state.gameStarted ? this.endGame : this.startGame} />
+                        <div
+                            className="game"
+                            onClick={this.state.gameStarted ? this.endGame : this.startGame}
+                        >
+                            {this.state.gameStarted
+                                ? <p className="game-cta">Arrêter la partie</p>
+                                : <p className="game-cta">commencer le blindtest avec la playlist {this.state.playlistSelected.name}</p>
+                            }
                         </div>
                     }
                 </div>

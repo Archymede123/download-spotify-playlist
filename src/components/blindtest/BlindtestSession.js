@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 // my components
-import Blindtest from './Blindtest'
+
+// import FindArtist from './FindArtist'
+import AristSelector from './ArtistSelector';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -12,22 +14,34 @@ class BlindtestSession extends Component {
         this.state = {
             score: 0,
             songplayed: [],
-            blindtestLength: 3,
-            sessionEnded: false,
+            blindtestLength: 9,
+            sessionOn: false,
             timeToGuess: 10000,
-            currentSong: ""
         }
+    }
+
+    getCurrentPlayedSong = () => {
+        setTimeout(() => {
+            spotifyApi.getMyCurrentPlaybackState()
+                .then(response => {
+                    let currentData = {
+                        song: response.item.name,
+                        artist: {
+                            name: response.item.artists[0].name,
+                            id: response.item.artists[0].id
+                        }
+                    }
+                    this.setState({ currentData })
+                })
+        }, 300);
+
     }
 
     manageMusic = () => {
         this.interval = setInterval(() => {
-            spotifyApi.getMyCurrentPlaybackState()
-                .then(response => {
-                    let currentSong = response.item.name
-                    this.setState({ currentSong })
-                    this.updateResultList(currentSong)
-                })
-            this.toggleSong()
+            this.getCurrentPlayedSong()
+            this.updateResultList(this.state.currentData.song)
+            // this.toggleSong()
             spotifyApi.skipToNext()
         }, this.state.timeToGuess)
     }
@@ -39,6 +53,10 @@ class BlindtestSession extends Component {
         }
     }
 
+    submitAnswer = (artist) => {
+        this.state.currentData.artist.name === artist && this.updateScore()
+    }
+
     updateScore = () => {
         let score = this.state.score
         score += 1
@@ -47,20 +65,17 @@ class BlindtestSession extends Component {
             .then(response => this.updateResultList(response.item.name))
     }
 
-    toggleSong = () => {
-        let switchedSong = !this.state.switchedSong
-        this.setState({ switchedSong })
-    }
-
     componentDidUpdate() {
-        if (this.state.songplayed.length === this.state.blindtestLength & !this.state.sessionEnded) {
+        if (this.state.songplayed.length === this.state.blindtestLength & this.state.sessionOn) {
             clearInterval(this.interval)
-            this.setState({ sessionEnded: true })
+            this.setState({ sessionOn: false })
         }
     }
 
     componentDidMount() {
+        this.getCurrentPlayedSong()
         this.manageMusic()
+        this.setState({ sessionOn: true })
     }
 
     componentWillUnmount() {
@@ -81,14 +96,18 @@ class BlindtestSession extends Component {
                         )}
                     </ul>
                 </div>
-                {!this.state.sessionEnded &&
-                    <Blindtest
-                        timeToGuess={this.state.timeToGuess}
-                        access_token={this.props.access_token}
-                        updateScore={this.updateScore}
-                        toggleSong={this.state.toggleSong}
-                        currentSong={this.state.currentSong}
+                {this.state.sessionOn && this.state.currentData &&
+                    <AristSelector
+                        currentData={this.state.currentData}
+                        submitAnswer={this.submitAnswer}
                     />
+                    // <FindArtist
+                    //     timeToGuess={this.state.timeToGuess}
+                    //     access_token={this.props.access_token}
+                    //     updateScore={this.updateScore}
+                    //     // toggleSong={this.state.toggleSong}
+                    //     currentData={this.state.currentData}
+                    // />
                 }
             </div>
 

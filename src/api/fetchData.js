@@ -40,7 +40,9 @@ export function fetchPlaylistData(accessToken) {
                     trackDatasFlatten.forEach((trackData, i) => {
                         let playlistSong = {
                             name: trackData.track.name,
-                            duration: trackData.track.duration_ms / 1000
+                            duration: trackData.track.duration_ms / 1000,
+                            artistUri: trackData.track.artists[0].uri,
+                            uri: trackData.track.uri
                         }
                         playlistTrackData.push(playlistSong)
                     })

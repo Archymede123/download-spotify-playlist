@@ -1,9 +1,17 @@
+body {
+    --color-primary: #DA5B55;
+    --color-secondary: #007D0F;
+    --color-grey-dark: #222;
+    background-color: var(--color-grey-dark)
+}
+
 .App {
   text-align: center;
-  background-color: #222;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'arial-narrow', sans-serif;
   min-height: 100vh;
+  max-width: 1408px;
+  margin: 0 auto;
 }
 
 

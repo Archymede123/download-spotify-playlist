@@ -103,6 +103,7 @@ class App extends Component {
                   path="/"
                   render={(props) => <BlindtestGame {...props}
                     access_token={this.state.access_token}
+                    data={this.state}
                   />}
                 />
               </Switch>

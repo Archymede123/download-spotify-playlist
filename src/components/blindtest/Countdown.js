@@ -36,16 +36,9 @@ class Countdown extends Component {
     }
 
     render() {
-        if (this.props.answerIsCorrect) {
-            return (
-                <p>Good job, {this.state.remainingTime} before next song</p>
-            )
-        } else {
-            return (
-                <p>You have {this.state.remainingTime} left, hurry up motherfucker</p>
-            )
-        }
-
+        return (
+            <p className={this.props.className}>{this.state.remainingTime}</p>
+        )
     }
 }
 
