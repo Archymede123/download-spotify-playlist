@@ -16,7 +16,7 @@ class BlindtestSession extends Component {
             songplayed: [],
             blindtestLength: 9,
             sessionOn: false,
-            timeToGuess: 10000,
+            timeToGuess: 120000,
         }
     }
 

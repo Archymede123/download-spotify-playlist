@@ -50,17 +50,6 @@ class AristSelector extends Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (this.state.userCanSelect !== nextState.userCanSelect) {
-    //         return false
-    //     } if (this.props.currentData !== nextProps.currentData) {
-    //         return false
-    //     }
-    //     else {
-    //         return true;
-    //     }
-    // }
-
     componentDidUpdate(prevProps) {
         if (prevProps.currentData !== this.props.currentData) {
             this.setState({
@@ -76,19 +65,28 @@ class AristSelector extends Component {
         this.getRelatedArtist(this.props.currentData.artist.id)
         this.getArtistImage(this.props.currentData.artist.id)
     }
+
     render() {
         let artists = this.state.artistSelection
         return (
             <div>
-                <p>L'artiste est ...</p>
-                <ul>
+                <p className="instructions">L'artiste est ...</p>
+                <ul className="artists">
                     {artists.map((artist, key) =>
-                        <li key={key} onClick={this.selectAnswer} data-artist={artist.name}>
-                            <img
-                                src={artist.imageUrl}
-                                alt={artist.name}
-                                className="artist-avatar" />
-                            {artist.name}
+                        <li
+                            key={key}
+                            onClick={this.selectAnswer}
+                            data-artist={artist.name}
+                            className="artist"
+                        >
+                            <div className="artist-avatar">
+                                <img
+                                    src={artist.imageUrl}
+                                    alt={artist.name}
+                                />
+                            </div>
+
+                            <p className="artist-name">{artist.name}</p>
                         </li>
                     )}
                 </ul>
