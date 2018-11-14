@@ -74,7 +74,7 @@
     bottom: 0;
 }
 
-.selected::before {
+.playlist.selected::before {
     content:'';
     position: absolute;
     top: -16px;

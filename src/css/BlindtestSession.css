@@ -1,0 +1,22 @@
+
+.hidden {
+    display: none;
+}
+
+.blindtest-session {
+    display: flex;
+    justify-content: left;
+}
+
+.played-song {
+    flex: 0 0 20%;
+    padding: 0 16px;
+    text-align: left;
+}
+
+.current-session {
+    flex: 0 0 60%;
+    text-align: center;
+}
+
+

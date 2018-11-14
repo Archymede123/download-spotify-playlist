@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import SpotifyWebApi from 'spotify-web-api-js';
+import React, { Component } from 'react'
+import SpotifyWebApi from 'spotify-web-api-js'
 
 // my components
+import AristSelector from './ArtistSelector'
+import SessionInformations from './SessionInformations'
 
-// import FindArtist from './FindArtist'
-import AristSelector from './ArtistSelector';
+//css
+import '../../css/BlindtestSession.css'
+import '../../css/SessionInformations.css'
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -17,6 +20,7 @@ class BlindtestSession extends Component {
             blindtestLength: 9,
             sessionOn: false,
             timeToGuess: 120000,
+            remainingTime: 5
         }
     }
 
@@ -34,17 +38,36 @@ class BlindtestSession extends Component {
                     this.setState({ currentData })
                 })
         }, 300);
-
     }
 
-    manageMusic = () => {
+
+    timer = () => {
+        this.getCurrentPlayedSong()
         this.interval = setInterval(() => {
-            this.getCurrentPlayedSong()
-            this.updateResultList(this.state.currentData.song)
-            // this.toggleSong()
-            spotifyApi.skipToNext()
-        }, this.state.timeToGuess)
+            let remainingTime = this.state.remainingTime
+            remainingTime -= 1
+            this.setState({ remainingTime })
+            if (remainingTime < 1) {
+                clearInterval(this.interval)
+                this.nextSong()
+                this.updateResultList(this.state.currentData.song)
+            }
+        }, 1000)
     }
+
+    nextSong = () => {
+        this.setState({ remainingTime: 5 })
+        this.timer()
+        spotifyApi.skipToNext()
+    }
+
+    // manageMusic = () => {
+    //     this.interval = setInterval(() => {
+    //         this.getCurrentPlayedSong()
+    //         this.updateResultList(this.state.currentData.song)
+    //         spotifyApi.skipToNext()
+    //     }, this.state.timeToGuess)
+    // }
 
     updateResultList = (track) => {
         if (!this.state.songplayed.includes(track)) {
@@ -54,7 +77,9 @@ class BlindtestSession extends Component {
     }
 
     submitAnswer = (artist) => {
+        clearInterval(this.interval)
         this.state.currentData.artist.name === artist && this.updateScore()
+        this.nextSong()
     }
 
     updateScore = () => {
@@ -73,8 +98,9 @@ class BlindtestSession extends Component {
     }
 
     componentDidMount() {
-        this.getCurrentPlayedSong()
-        this.manageMusic()
+        // this.getCurrentPlayedSong()
+        this.timer()
+        // this.manageMusic()
         this.setState({ sessionOn: true })
     }
 
@@ -85,32 +111,24 @@ class BlindtestSession extends Component {
     render() {
         return (
             <div className="blindtest-session">
-
-                <div className="informations">
-                    <p>Welcome to the blindtest </p>
-                    <p>You currently have {this.state.score} points</p>
-                    <p>Previously played songs: </p>
-                    <ul>
-                        {this.state.songplayed.map((song, key) =>
-                            <li key={key}>{song}</li>
-                        )}
-                    </ul>
-                </div>
-                {this.state.sessionOn && this.state.currentData &&
-                    <AristSelector
-                        currentData={this.state.currentData}
-                        submitAnswer={this.submitAnswer}
+                <ul className="played-song">
+                    {this.state.songplayed.map((song, key) =>
+                        <li key={key}>{song}</li>
+                    )}
+                </ul>
+                <div className="current-session">
+                    <SessionInformations
+                        score={this.state.score}
+                        remainingTime={this.state.remainingTime}
                     />
-                    // <FindArtist
-                    //     timeToGuess={this.state.timeToGuess}
-                    //     access_token={this.props.access_token}
-                    //     updateScore={this.updateScore}
-                    //     // toggleSong={this.state.toggleSong}
-                    //     currentData={this.state.currentData}
-                    // />
-                }
+                    {this.state.sessionOn && this.state.currentData &&
+                        <AristSelector
+                            currentData={this.state.currentData}
+                            submitAnswer={this.submitAnswer}
+                        />
+                    }
+                </div>
             </div>
-
         );
     }
 }

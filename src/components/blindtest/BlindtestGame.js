@@ -9,7 +9,7 @@ import PlaylistPicker from './PlaylistPicker'
 
 
 // css
-import '../../css/Blindtest.css';
+import '../../css/BlindtestSession.css';
 import '../../css/BlindtestGame.css'
 
 

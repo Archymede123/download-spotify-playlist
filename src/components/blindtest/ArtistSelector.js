@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
+import className from 'classnames';
 
 // js 
 import { shuffle } from '../../api/shuffle';
+
+// css 
+import '../../css/artistSelector.css';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -20,7 +24,8 @@ class AristSelector extends Component {
             let imageUrl = response.images[1] ? response.images[1].url : ""
             let currentArtist = {
                 name: response.name,
-                imageUrl
+                imageUrl,
+                isSelected: false
             }
             let artistSelection = [...this.state.artistSelection, currentArtist]
             this.setState({ artistSelection: shuffle(artistSelection) })
@@ -32,11 +37,12 @@ class AristSelector extends Component {
         spotifyApi.getArtistRelatedArtists(artistId)
             .then(response => {
                 response.artists.slice(0, 3).map(artist => {
-                    let imageUrl = artist.images[1] ? artist.images[1].url : ""
+                    let imageUrl = artist.images[1] ? artist.images[1].url : require('../../images/noImageAvailable.png')
                     let artistSelection = [...this.state.artistSelection, {
                         name: artist.name,
                         imageUrl,
-                        popularity: artist.popularity
+                        popularity: artist.popularity,
+                        isSelected: false
                     }]
                     return this.setState({ artistSelection: shuffle(artistSelection) })
                 })
@@ -45,7 +51,11 @@ class AristSelector extends Component {
 
     selectAnswer = (event) => {
         if (this.state.userCanSelect) {
-            this.props.submitAnswer(event.currentTarget.dataset.artist)
+            let artistName = event.currentTarget.dataset.artist
+            this.props.submitAnswer(artistName)
+            let artistSelection = this.state.artistSelection
+            let artistIndex = artistSelection.findIndex(artist => artist.name === artistName)
+            artistSelection[artistIndex].isSelected = true
             this.setState({ userCanSelect: false })
         }
     }
@@ -68,6 +78,10 @@ class AristSelector extends Component {
 
     render() {
         let artists = this.state.artistSelection
+        var artistClass = className({
+            artist: true,
+            hover: this.state.userCanSelect
+        })
         return (
             <div>
                 <p className="instructions">L'artiste est ...</p>
@@ -77,7 +91,7 @@ class AristSelector extends Component {
                             key={key}
                             onClick={this.selectAnswer}
                             data-artist={artist.name}
-                            className="artist"
+                            className={artist.isSelected ? "artist selected" : artistClass}
                         >
                             <div className="artist-avatar">
                                 <img
