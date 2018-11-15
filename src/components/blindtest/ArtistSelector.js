@@ -73,7 +73,6 @@ class AristSelector extends Component {
 
         if (prevProps.answers !== this.props.answers) {
             let currentAnswer = this.props.answers.slice(-1)[0]
-            console.log(currentAnswer)
             this.setState({
                 currentAnswer: currentAnswer,
                 answerWasCorrect: currentAnswer.correct,
