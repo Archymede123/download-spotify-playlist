@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import className from 'classnames';
+import Button from '../UI-components/Button'
 
 // js 
 import { shuffle } from '../../api/shuffle';
@@ -56,7 +57,7 @@ class AristSelector extends Component {
             let artistSelection = this.state.artistSelection
             let artistIndex = artistSelection.findIndex(artist => artist.name === artistName)
             artistSelection[artistIndex].isSelected = true
-            this.setState({ userCanSelect: false })
+            // this.setState({ userCanSelect: false })
         }
     }
 
@@ -64,10 +65,20 @@ class AristSelector extends Component {
         if (prevProps.currentData !== this.props.currentData) {
             this.setState({
                 artistSelection: [],
-                userCanSelect: true
+                userCanSelect: true,
             })
             this.getRelatedArtist(this.props.currentData.artist.id)
             this.getArtistImage(this.props.currentData.artist.id)
+        }
+
+        if (prevProps.answers !== this.props.answers) {
+            let currentAnswer = this.props.answers.slice(-1)[0]
+            console.log(currentAnswer)
+            this.setState({
+                currentAnswer: currentAnswer,
+                answerWasCorrect: currentAnswer.correct,
+                userCanSelect: false
+            })
         }
     }
 
@@ -104,6 +115,21 @@ class AristSelector extends Component {
                         </li>
                     )}
                 </ul>
+                {!this.state.userCanSelect &&
+                    <div>
+                        <p className="instructions">{this.state.answerWasCorrect ? "BRAVO" : "LOOSER"}</p>
+                        <p>L'artiste : {this.state.currentAnswer.artist}</p>
+                        <p>Le morceau : {this.state.currentAnswer.song}</p>
+                        <p>Temps de réponse : {this.state.currentAnswer.timeSpent} secondes</p>
+                        <p>Nombre de points : {this.state.currentAnswer.score}</p>
+                        <Button
+                            onClick={this.props.nextSong}
+                            content='prochain morceau'
+                        />
+
+                    </div>
+                }
+
             </div>
         )
 

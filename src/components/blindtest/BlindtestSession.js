@@ -5,6 +5,11 @@ import SpotifyWebApi from 'spotify-web-api-js'
 import AristSelector from './ArtistSelector'
 import SessionInformations from './SessionInformations'
 
+
+// js 
+import { updateScore, getTotalScore } from '../../api/score'
+
+
 //css
 import '../../css/BlindtestSession.css'
 import '../../css/SessionInformations.css'
@@ -14,13 +19,15 @@ const spotifyApi = new SpotifyWebApi();
 class BlindtestSession extends Component {
     constructor(props) {
         super(props);
+        let timeToGuess = 30
         this.state = {
             score: 0,
             songplayed: [],
+            answers: [],
             blindtestLength: 9,
             sessionOn: false,
-            timeToGuess: 120000,
-            remainingTime: 5
+            timeToGuess,
+            remainingTime: timeToGuess
         }
     }
 
@@ -48,26 +55,26 @@ class BlindtestSession extends Component {
             remainingTime -= 1
             this.setState({ remainingTime })
             if (remainingTime < 1) {
-                clearInterval(this.interval)
-                this.nextSong()
-                this.updateResultList(this.state.currentData.song)
+                this.submitAnswer("")
             }
         }, 1000)
     }
 
-    nextSong = () => {
-        this.setState({ remainingTime: 5 })
-        this.timer()
-        spotifyApi.skipToNext()
+    nextSongDelayed = () => {
+        this.nextSongTimeout = setTimeout(() => {
+            this.nextSong()
+        }, 5000);
     }
 
-    // manageMusic = () => {
-    //     this.interval = setInterval(() => {
-    //         this.getCurrentPlayedSong()
-    //         this.updateResultList(this.state.currentData.song)
-    //         spotifyApi.skipToNext()
-    //     }, this.state.timeToGuess)
-    // }
+    nextSong = () => {
+        clearTimeout(this.nextSongTimeout)
+        clearInterval(this.interval)
+        this.updateResultList(this.state.currentData.song)
+        this.setState({ remainingTime: this.state.timeToGuess })
+        spotifyApi.skipToNext()
+        this.timer()
+    }
+
 
     updateResultList = (track) => {
         if (!this.state.songplayed.includes(track)) {
@@ -76,18 +83,25 @@ class BlindtestSession extends Component {
         }
     }
 
-    submitAnswer = (artist) => {
+    submitAnswer = (artistAnswered) => {
         clearInterval(this.interval)
-        this.state.currentData.artist.name === artist && this.updateScore()
-        this.nextSong()
+        let timeSpent = this.state.timeToGuess - this.state.remainingTime
+        let correct = this.state.currentData.artist.name === artistAnswered ? true : false
+        let answers = [...this.state.answers, {
+            answer: artistAnswered,
+            artist: this.state.currentData.artist.name,
+            song: this.state.currentData.song,
+            correct, timeSpent
+        }]
+        this.setState({ answers }, () => this.updateScore())
+        this.nextSongDelayed()
     }
 
     updateScore = () => {
-        let score = this.state.score
-        score += 1
-        this.setState({ score })
-        spotifyApi.getMyCurrentPlaybackState()
-            .then(response => this.updateResultList(response.item.name))
+        let answers = updateScore(this.state.answers, this.state.timeToGuess)
+        let score = getTotalScore(answers)
+        this.setState({ score, answers })
+        this.updateResultList(this.state.currentData.song)
     }
 
     componentDidUpdate() {
@@ -98,23 +112,25 @@ class BlindtestSession extends Component {
     }
 
     componentDidMount() {
-        // this.getCurrentPlayedSong()
         this.timer()
-        // this.manageMusic()
         this.setState({ sessionOn: true })
     }
 
     componentWillUnmount() {
         clearInterval(this.interval)
+        clearTimeout(this.nextSongTimeout)
     }
 
     render() {
         return (
             <div className="blindtest-session">
                 <ul className="played-song">
-                    {this.state.songplayed.map((song, key) =>
-                        <li key={key}>{song}</li>
+                    {this.state.answers.map((answer, key) =>
+                        <li key={key}>{answer.song} - {answer.artist} {answer.correct ? "OK" : "KO"}</li>
                     )}
+                    {/* {this.state.songplayed.map((song, key) =>
+                        <li key={key}>{song}</li>
+                    )} */}
                 </ul>
                 <div className="current-session">
                     <SessionInformations
@@ -122,10 +138,15 @@ class BlindtestSession extends Component {
                         remainingTime={this.state.remainingTime}
                     />
                     {this.state.sessionOn && this.state.currentData &&
-                        <AristSelector
-                            currentData={this.state.currentData}
-                            submitAnswer={this.submitAnswer}
-                        />
+                        <div>
+                            <AristSelector
+                                currentData={this.state.currentData}
+                                submitAnswer={this.submitAnswer}
+                                nextSong={this.nextSong}
+                                answers={this.state.answers}
+                            />
+                        </div>
+
                     }
                 </div>
             </div>
