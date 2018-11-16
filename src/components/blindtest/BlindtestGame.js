@@ -50,17 +50,6 @@ class BlindtestGame extends Component {
         this.setState({ playlistSelected: playlist })
     }
 
-    updateScore = () => {
-        let score = this.state.score
-        score += 1
-        if (this.state.gameStarted) {
-            this.setState({
-                score
-            })
-        }
-        spotifyApi.skipToNext()
-    }
-
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
 
@@ -108,7 +97,7 @@ class BlindtestGame extends Component {
                             onClick={this.state.gameStarted ? this.endGame : this.startGame}
                         >
                             {this.state.gameStarted
-                                ? <p className="game-cta">Arrêter la partie</p>
+                                ? <p className="game-cta">Arrêter la partie en cours</p>
                                 : <p className="game-cta">commencer le blindtest avec la playlist {this.state.playlistSelected.name}</p>
                             }
                         </div>

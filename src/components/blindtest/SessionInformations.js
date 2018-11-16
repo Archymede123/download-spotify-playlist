@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 // import SpotifyWebApi from 'spotify-web-api-js';
 
-// my components
-// import AristSelector from './ArtistSelector';
+// css
+import '../../css/animations.css'
+import '../../css/SessionInformations.css'
 
 // const spotifyApi = new SpotifyWebApi();
 
@@ -14,10 +16,29 @@ class SessionInformations extends Component {
     }
 
     render() {
+        let timeLeft = this.props.remainingTime
         return (
             <div className="informations">
-                <p>You currently have {this.props.score} points</p>
-                <p>Time left: {this.props.remainingTime}</p>
+                <div>
+                    You currently have
+                    <span> {this.props.score}</span>
+                    points
+                </div>
+                <div>
+                    <span className='timing-container'>
+                        Time left:
+                        <TransitionGroup component='span' className='count'>
+                            <CSSTransition
+                                classNames='count'
+                                key={timeLeft}
+                                timeout={{ enter: 500, exit: 500 }}
+                            >
+                                <span className='inline-block'>{timeLeft}</span>
+                            </CSSTransition>
+                        </TransitionGroup>
+                    </span>
+
+                </div>
             </div>
         );
     }

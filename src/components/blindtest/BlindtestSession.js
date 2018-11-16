@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-js'
+import { Motion, spring } from 'react-motion'
 
 // my components
 import AristSelector from './ArtistSelector'
@@ -19,7 +20,7 @@ const spotifyApi = new SpotifyWebApi();
 class BlindtestSession extends Component {
     constructor(props) {
         super(props);
-        let timeToGuess = 30
+        let timeToGuess = 120
         this.state = {
             score: 0,
             songplayed: [],
@@ -139,14 +140,22 @@ class BlindtestSession extends Component {
                     />
                     {this.state.sessionOn && this.state.currentData &&
                         <div>
-                            <AristSelector
-                                currentData={this.state.currentData}
-                                submitAnswer={this.submitAnswer}
-                                nextSong={this.nextSong}
-                                answers={this.state.answers}
-                            />
-                        </div>
+                            <Motion
+                                defaultStyle={{ x: -800, opacity: 0 }}
+                                style={{ x: spring(0), opacity: spring(1) }}
+                            >
+                                {(style) => (
+                                    <AristSelector
+                                        style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }}
+                                        currentData={this.state.currentData}
+                                        submitAnswer={this.submitAnswer}
+                                        nextSong={this.nextSong}
+                                        answers={this.state.answers}
+                                    />
+                                )}
 
+                            </Motion>
+                        </div>
                     }
                 </div>
             </div>

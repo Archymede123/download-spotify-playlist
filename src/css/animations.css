@@ -1,0 +1,26 @@
+.count-enter {
+    transition: .7s;
+    transform: translateY(100%)
+}
+
+.count-enter.count-enter-active {
+    transform: translateY(0)
+}
+
+.count-exit {
+    transition: .7s;
+    transform: translateY(0);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.count-exit.count-exit-active {
+    transform: translateY(-100%)
+}
+
+.count {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}

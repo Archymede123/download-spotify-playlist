@@ -105,3 +105,9 @@
     width: 8px;
     background: var(--color-primary);
 }
+
+/* useful */
+
+.inline-block {
+    display: inline-block;
+}

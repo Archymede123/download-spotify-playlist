@@ -46,8 +46,8 @@
     z-index: -1;
 }
 
-.artist.hover:hover .artist-avatar img,
-.artist.selected .artist-avatar img {
+.artist.hover:hover .artist-avatar .image,
+.artist.selected .artist-avatar .image {
     box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 
                 0 6px 30px 5px rgba(0,0,0,0.12), 
                 0 8px 10px 0 rgba(0,0,0,0.20);

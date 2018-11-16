@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
-import SpotifyWebApi from 'spotify-web-api-js';
-import className from 'classnames';
+import React, { Component } from 'react'
+import SpotifyWebApi from 'spotify-web-api-js'
+import className from 'classnames'
+import { Motion, spring } from 'react-motion'
+// import styled from 'styled-components'
+
 import Button from '../UI-components/Button'
+import ArtistCard from './ArtistCard'
+
 
 // js 
 import { shuffle } from '../../api/shuffle';
 
 // css 
 import '../../css/artistSelector.css';
+
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -93,7 +99,7 @@ class AristSelector extends Component {
             hover: this.state.userCanSelect
         })
         return (
-            <div>
+            <div style={this.props.style}>
                 <p className="instructions">L'artiste est ...</p>
                 <ul className="artists">
                     {artists.map((artist, key) =>
@@ -103,14 +109,18 @@ class AristSelector extends Component {
                             data-artist={artist.name}
                             className={artist.isSelected ? "artist selected" : artistClass}
                         >
-                            <div className="artist-avatar">
+                            <ArtistCard
+                                artistName={artist.name}
+                                image={artist.imageUrl}
+                            />
+                            {/* <div className="artist-avatar">
                                 <img
                                     src={artist.imageUrl}
                                     alt={artist.name}
                                 />
                             </div>
 
-                            <p className="artist-name">{artist.name}</p>
+                            <p className="artist-name">{artist.name}</p> */}
                         </li>
                     )}
                 </ul>
