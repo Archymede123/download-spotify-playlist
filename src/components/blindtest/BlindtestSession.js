@@ -64,7 +64,7 @@ class BlindtestSession extends Component {
     nextSongDelayed = () => {
         this.nextSongTimeout = setTimeout(() => {
             this.nextSong()
-        }, 5000);
+        }, 400000);
     }
 
     nextSong = () => {

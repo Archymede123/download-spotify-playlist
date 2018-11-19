@@ -1,40 +1,19 @@
 import React, { Component } from 'react'
-// import className from 'classnames'
 import { Motion, spring } from 'react-motion'
 import styled from 'styled-components'
+import className from 'classnames'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+
+import '../../css/ArtistCard.css';
 
 
 const Wrapper = styled.div`
+    background: ${(props) => props.isSelected && props.isTheAnswer && 'var(--color-secondary)'};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
-// const ArtistImageWrapper = styled.div`
-//     position: relative;
-//     &::after {
-//         position: absolute;
-//         height: 80px;
-//         width: 80px;
-//         background: var(--color-primary);
-//         border-radius: 50%;
-//         top: 0;
-//         left: 0;
-//         z-index: -1;
-//     }
-
-//     &:hover {
-//         &::after {
-//             content: "";
-//             transform: scale(1.2);
-//             transform-origin: center;
-//             transition: content ease-in-out .15s;
-//         }
-
-//         .image {
-//             box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 
-//                         0 6px 30px 5px rgba(0,0,0,0.12), 
-//                         0 8px 10px 0 rgba(0,0,0,0.20);
-//         }
-//     }
-
-// `
 
 const ArtistImage = styled.div`
     background: url('${(props) => props.image}');
@@ -46,16 +25,40 @@ const ArtistImage = styled.div`
     background-size: cover;
 `
 
+const CorrectAnswerBackground = styled.div``
 
 
 class ArtistCard extends Component {
+
+
+
     render() {
+
         const {
             image,
-            artistName
+            artistName,
+            isSelected,
+            isTheAnswer,
+            userCanSelect,
+            currentAnswer
         } = this.props
+
+        var artistClass = className({
+            all: true,
+            active: !userCanSelect & isSelected || !userCanSelect & isTheAnswer,
+            winner: !userCanSelect && isTheAnswer,
+            loser: !userCanSelect && isSelected && !isTheAnswer
+        })
         return (
-            <Wrapper>
+            <Wrapper
+                className={!isTheAnswer && artistClass}
+                isSelected={isSelected}
+                isTheAnswer={isTheAnswer}
+            >
+                {isSelected && isTheAnswer && <p>Bravo</p>}
+                {isSelected && !isTheAnswer && <p>Ah que non</p>}
+                {!userCanSelect && isTheAnswer && <p>C'était moi</p>}
+
                 <Motion
                     defaultStyle={{ scaleX: 0 }}
                     style={{ scaleX: spring(1) }}
@@ -71,6 +74,29 @@ class ArtistCard extends Component {
                     )}
                 </Motion>
                 <p className="artist-name">{artistName}</p>
+                {!userCanSelect && isTheAnswer &&
+                    <Motion
+                        defaultStyle={{ top: 100 }}
+                        style={{ top: spring(0) }}
+                    >
+                        {(style) => (
+                            <CorrectAnswerBackground
+                                className={artistClass}
+                                style={{ top: `${style.top}%` }}
+                            >
+                                <p>LA BONNE RÉPONSE</p>
+                                <p>Morceau: {currentAnswer.song}</p>
+                                <p>Temps de réponse: {currentAnswer.timeSpent} </p>
+                                <p>Nombre de point: {currentAnswer.score} </p>
+                            </CorrectAnswerBackground>
+                        )}
+
+                    </Motion>
+                }
+
+                {!userCanSelect && !isTheAnswer && isSelected &&
+                    <p>LOOSER</p>
+                }
             </Wrapper>
         )
     }

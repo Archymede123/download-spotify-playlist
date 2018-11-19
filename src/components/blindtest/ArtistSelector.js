@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-js'
 import className from 'classnames'
-import { Motion, spring } from 'react-motion'
+// import { Motion, spring } from 'react-motion'
 // import styled from 'styled-components'
 
 import Button from '../UI-components/Button'
@@ -32,7 +32,8 @@ class AristSelector extends Component {
             let currentArtist = {
                 name: response.name,
                 imageUrl,
-                isSelected: false
+                isSelected: false,
+                isTheAnswer: true
             }
             let artistSelection = [...this.state.artistSelection, currentArtist]
             this.setState({ artistSelection: shuffle(artistSelection) })
@@ -49,7 +50,8 @@ class AristSelector extends Component {
                         name: artist.name,
                         imageUrl,
                         popularity: artist.popularity,
-                        isSelected: false
+                        isSelected: false,
+                        isTheAnswer: false
                     }]
                     return this.setState({ artistSelection: shuffle(artistSelection) })
                 })
@@ -63,7 +65,6 @@ class AristSelector extends Component {
             let artistSelection = this.state.artistSelection
             let artistIndex = artistSelection.findIndex(artist => artist.name === artistName)
             artistSelection[artistIndex].isSelected = true
-            // this.setState({ userCanSelect: false })
         }
     }
 
@@ -112,31 +113,19 @@ class AristSelector extends Component {
                             <ArtistCard
                                 artistName={artist.name}
                                 image={artist.imageUrl}
+                                isTheAnswer={artist.isTheAnswer}
+                                isSelected={artist.isSelected}
+                                userCanSelect={this.state.userCanSelect}
+                                currentAnswer={this.state.currentAnswer}
                             />
-                            {/* <div className="artist-avatar">
-                                <img
-                                    src={artist.imageUrl}
-                                    alt={artist.name}
-                                />
-                            </div>
-
-                            <p className="artist-name">{artist.name}</p> */}
                         </li>
                     )}
                 </ul>
                 {!this.state.userCanSelect &&
-                    <div>
-                        <p className="instructions">{this.state.answerWasCorrect ? "BRAVO" : "LOOSER"}</p>
-                        <p>L'artiste : {this.state.currentAnswer.artist}</p>
-                        <p>Le morceau : {this.state.currentAnswer.song}</p>
-                        <p>Temps de réponse : {this.state.currentAnswer.timeSpent} secondes</p>
-                        <p>Nombre de points : {this.state.currentAnswer.score}</p>
-                        <Button
-                            onClick={this.props.nextSong}
-                            content='prochain morceau'
-                        />
-
-                    </div>
+                    <Button
+                        onClick={this.props.nextSong}
+                        content='prochain morceau'
+                    />
                 }
 
             </div>

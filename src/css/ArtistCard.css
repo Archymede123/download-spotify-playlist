@@ -1,0 +1,57 @@
+
+/* 
+.active {
+    width: 0%;
+} */
+
+.winner {
+    height: 150px;
+    width: 100px;
+    position: relative;
+}
+
+.winner::after {
+    content:'';
+    background: var(--color-secondary);
+    position: absolute;
+    height: 200%;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    z-index:-1;
+}
+
+
+
+.loser {
+    position: relative;
+    height: 150px;
+   
+    width: 100px;
+}
+
+.loser::after,
+.loser::before {
+    content: " ";
+    width: 176%;
+    transition: all ease-in-out 2s;
+    height: 16px;
+    position: absolute;
+    z-index: 10;
+    background-color: red;
+}
+
+.loser::before {
+    top: 0;
+    left: 0;
+    transform: rotate(58deg);
+    transform-origin: 0%;
+}
+
+.loser::after {
+    bottom: 0;
+    right: 100%;
+    transform: rotate(123deg);
+    transform-origin: 100%;
+}
+
