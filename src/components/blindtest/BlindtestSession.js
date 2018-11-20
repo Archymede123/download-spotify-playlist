@@ -5,6 +5,7 @@ import { Motion, spring } from 'react-motion'
 // my components
 import AristSelector from './ArtistSelector'
 import SessionInformations from './SessionInformations'
+import SessionAnswers from './SessionAnswers';
 
 
 // js 
@@ -14,6 +15,7 @@ import { updateScore, getTotalScore } from '../../api/score'
 //css
 import '../../css/BlindtestSession.css'
 import '../../css/SessionInformations.css'
+
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -84,7 +86,7 @@ class BlindtestSession extends Component {
         }
     }
 
-    submitAnswer = (artistAnswered) => {
+    submitAnswer = (artistAnswered, imageUrl) => {
         clearInterval(this.interval)
         let timeSpent = this.state.timeToGuess - this.state.remainingTime
         let correct = this.state.currentData.artist.name === artistAnswered ? true : false
@@ -92,7 +94,9 @@ class BlindtestSession extends Component {
             answer: artistAnswered,
             artist: this.state.currentData.artist.name,
             song: this.state.currentData.song,
-            correct, timeSpent
+            imageUrl,
+            correct,
+            timeSpent
         }]
         this.setState({ answers }, () => this.updateScore())
         this.nextSongDelayed()
@@ -125,21 +129,14 @@ class BlindtestSession extends Component {
     render() {
         return (
             <div className="blindtest-session">
-                <ul className="played-song">
-                    {this.state.answers.map((answer, key) =>
-                        <li key={key}>{answer.song} - {answer.artist} {answer.correct ? "OK" : "KO"}</li>
-                    )}
-                    {/* {this.state.songplayed.map((song, key) =>
-                        <li key={key}>{song}</li>
-                    )} */}
-                </ul>
+                <SessionAnswers answers={this.state.answers} />
                 <div className="current-session">
                     <SessionInformations
                         score={this.state.score}
                         remainingTime={this.state.remainingTime}
                     />
                     {this.state.sessionOn && this.state.currentData &&
-                        <div>
+                        <div className='current-blindest'>
                             <Motion
                                 defaultStyle={{ x: -800, opacity: 0 }}
                                 style={{ x: spring(0), opacity: spring(1) }}

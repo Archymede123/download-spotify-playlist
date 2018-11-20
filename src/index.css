@@ -17,6 +17,11 @@ body {
 }
 
 @font-face {
+  font-family: 'arial';
+  src: url(./fonts/Arial.ttf) format('ttf');
+}
+
+@font-face {
   font-family: 'arial-black';
   src: url(./fonts/Arial\ Black.ttf) format('ttf');
 }

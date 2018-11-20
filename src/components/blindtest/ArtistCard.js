@@ -2,17 +2,28 @@ import React, { Component } from 'react'
 import { Motion, spring } from 'react-motion'
 import styled from 'styled-components'
 import className from 'classnames'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+// import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import '../../css/ArtistCard.css';
 
 
 const Wrapper = styled.div`
-    background: ${(props) => props.isSelected && props.isTheAnswer && 'var(--color-secondary)'};
+    
+    position: relative
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    .feedback-message {
+        position: absolute;
+        top: -48px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: arial-black;
+        text-transform: uppercase;
+        width: 90%;
+    }
 `
 
 const ArtistImage = styled.div`
@@ -44,20 +55,20 @@ class ArtistCard extends Component {
         } = this.props
 
         var artistClass = className({
-            all: true,
+            all: !isTheAnswer,
             active: !userCanSelect & isSelected || !userCanSelect & isTheAnswer,
             winner: !userCanSelect && isTheAnswer,
             loser: !userCanSelect && isSelected && !isTheAnswer
         })
         return (
             <Wrapper
-                className={!isTheAnswer && artistClass}
+                className={artistClass}
                 isSelected={isSelected}
                 isTheAnswer={isTheAnswer}
             >
-                {isSelected && isTheAnswer && <p>Bravo</p>}
-                {isSelected && !isTheAnswer && <p>Ah que non</p>}
-                {!userCanSelect && isTheAnswer && <p>C'était moi</p>}
+                {isSelected && isTheAnswer && <p className='feedback-message'>Bravo</p>}
+                {isSelected && !isTheAnswer && <p className='feedback-message'>Ah que non</p>}
+                {!userCanSelect && isTheAnswer && !isSelected && <p className='feedback-message'>C'était moi</p>}
 
                 <Motion
                     defaultStyle={{ scaleX: 0 }}
@@ -76,27 +87,32 @@ class ArtistCard extends Component {
                 <p className="artist-name">{artistName}</p>
                 {!userCanSelect && isTheAnswer &&
                     <Motion
-                        defaultStyle={{ top: 100 }}
-                        style={{ top: spring(0) }}
+                        defaultStyle={{ top: 200 }}
+                        style={{ top: spring(-64) }}
                     >
                         {(style) => (
                             <CorrectAnswerBackground
-                                className={artistClass}
-                                style={{ top: `${style.top}%` }}
+                                className="winner-background"
+                                style={{ top: `${style.top}px` }}
                             >
-                                <p>LA BONNE RÉPONSE</p>
-                                <p>Morceau: {currentAnswer.song}</p>
-                                <p>Temps de réponse: {currentAnswer.timeSpent} </p>
-                                <p>Nombre de point: {currentAnswer.score} </p>
+                                <p className="answer-section">
+                                    <span className="answer-type">Morceau:</span>
+                                    <span className='answer-displayed'>{currentAnswer.song}</span>
+                                </p>
+                                <p className="answer-section">
+                                    <span className="answer-type">Temps de réponse:</span>
+                                    <span className='answer-displayed'>{currentAnswer.timeSpent} secondes</span>
+                                </p>
+                                <p className="answer-section">
+                                    <span className="answer-type">Nombre de point:</span>
+                                    <span className='answer-displayed'>{currentAnswer.score}</span>
+                                </p>
                             </CorrectAnswerBackground>
                         )}
 
                     </Motion>
                 }
 
-                {!userCanSelect && !isTheAnswer && isSelected &&
-                    <p>LOOSER</p>
-                }
             </Wrapper>
         )
     }

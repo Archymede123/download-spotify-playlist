@@ -17,6 +17,39 @@
 .current-session {
     flex: 0 0 60%;
     text-align: center;
+    height: calc(100vh - 212px );
+    position: relative;
+    margin-left: 96px;
 }
 
+.current-blindest {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -45%);
+    width: 100%;
+}
+
+/* Answers  */
+.played-song .answer-content {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.played-song .answer-image {
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+}
+
+.played-song .answer-details {
+    flex: 1 0 70%;
+    margin: 0 16px 0 8px;
+    font-size: .85rem;
+}
+
+.played-song .answer-type {
+    flex: 0 0 16px;
+}
 

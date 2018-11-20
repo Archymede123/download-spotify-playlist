@@ -4,54 +4,108 @@
     width: 0%;
 } */
 
-.winner {
-    height: 150px;
-    width: 100px;
-    position: relative;
+.artist-name {
+    font-family: nikoleta;
 }
 
-.winner::after {
+.winner .winner-background {
+    height: 288px;
+    width: 100%;
+    position: absolute;
+    text-align: left;
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.winner .winner-background::after {
     content:'';
     background: var(--color-secondary);
     position: absolute;
-    height: 200%;
+    height: 100%;
     width: 100%;
     bottom: 0px;
     left: 0px;
     z-index:-1;
 }
 
+.winner .answer-section {
+    font-size: .9rem;
+}
 
+.winner .answer-section:last-child {
+    margin-bottom: 8px;
+}
+
+.winner .answer-type {
+    font-family: arial-narrow;
+}
+
+.winner .answer-displayed {
+    font-family: arial-narrow;
+    
+}
+
+.winner .artist-name {
+    margin-top: 32px;
+    transition: all ease-in-out 1s;
+    font-size: 1.2rem;
+}
+
+.winner .artist-avatar {
+    transform: scale(1.4);
+    transition: transform ease-in-out 1s;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 
+                0 6px 30px 5px rgba(0,0,0,0.12), 
+                0 8px 10px 0 rgba(0,0,0,0.20);
+}
+
+
+.artists .all::after,
+.artist .all::before {
+    content: " ";
+    width: 0%;
+    height: 8px;
+    position: absolute;
+    z-index: 10;
+    background-color: var(--color-primary);
+    left: 0;
+    opacity: 0;
+}
+
+.artists .all::before {
+    top: 0;
+}
+
+.artists .all::after {
+    bottom: 0;
+}
 
 .loser {
     position: relative;
-    height: 150px;
-   
-    width: 100px;
+    overflow: hidden;
 }
 
-.loser::after,
-.loser::before {
-    content: " ";
-    width: 176%;
-    transition: all ease-in-out 2s;
-    height: 16px;
-    position: absolute;
-    z-index: 10;
-    background-color: red;
-}
 
-.loser::before {
+
+.artists .all.loser::before {
+    width: 60%;
+    opacity: 1;
     top: 0;
-    left: 0;
-    transform: rotate(58deg);
+    left: 27%;
+    transform: rotate(37deg);
     transform-origin: 0%;
+    transition: width ease-in-out .5s;
 }
 
-.loser::after {
-    bottom: 0;
-    right: 100%;
-    transform: rotate(123deg);
-    transform-origin: 100%;
+.artists .all.loser::after {
+    width: 60%;
+    opacity: 1;
+    bottom: 25%;
+    left: 27%;
+    transform: rotate(-40deg);
+    transform-origin: 0;
+    transition: width ease-in-out .5s;
 }
 

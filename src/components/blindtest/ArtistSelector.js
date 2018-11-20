@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import SpotifyWebApi from 'spotify-web-api-js'
 import className from 'classnames'
-// import { Motion, spring } from 'react-motion'
+import { Motion, spring } from 'react-motion'
 // import styled from 'styled-components'
 
 import Button from '../UI-components/Button'
@@ -53,7 +53,10 @@ class AristSelector extends Component {
                         isSelected: false,
                         isTheAnswer: false
                     }]
-                    return this.setState({ artistSelection: shuffle(artistSelection) })
+                    return this.setState({
+                        artistSelection: shuffle(artistSelection),
+                        answerImageUrl: imageUrl,
+                    })
                 })
             })
     }
@@ -61,7 +64,7 @@ class AristSelector extends Component {
     selectAnswer = (event) => {
         if (this.state.userCanSelect) {
             let artistName = event.currentTarget.dataset.artist
-            this.props.submitAnswer(artistName)
+            this.props.submitAnswer(artistName, this.state.answerImageUrl)
             let artistSelection = this.state.artistSelection
             let artistIndex = artistSelection.findIndex(artist => artist.name === artistName)
             artistSelection[artistIndex].isSelected = true
@@ -122,10 +125,20 @@ class AristSelector extends Component {
                     )}
                 </ul>
                 {!this.state.userCanSelect &&
-                    <Button
-                        onClick={this.props.nextSong}
-                        content='prochain morceau'
-                    />
+                    <Motion
+                        defaultStyle={{ scale: 0 }}
+                        style={{ scale: spring(1) }}
+                    >
+                        {(style) => (
+                            <Button
+                                onClick={this.props.nextSong}
+                                content='prochain morceau'
+                                style={{ transform: `scale(${style.scale})` }}
+                            />
+                        )}
+
+                    </Motion>
+
                 }
 
             </div>
