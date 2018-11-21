@@ -26,7 +26,11 @@ class Blindtest extends Component {
         if (this._isMounted) {
             spotifyApi.getMyCurrentPlaybackState()
                 .then(response => {
-                    this.setState({ currentSong: response.item.name })
+                    console.log(response)
+                    this.setState({
+                        currentSong: response.item.name,
+                        // currentArtist: response.item.
+                    })
                 })
         }
     }

@@ -3,13 +3,15 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import className from 'classnames';
 
 // my components
-import Button from '../UI-components/Button';
+
 import BlindtestSession from './BlindtestSession'
 import PlaylistPicker from './PlaylistPicker'
+import Header from './Header'
 
 
 // css
-import '../../css/Blindtest.css';
+import '../../css/BlindtestSession.css';
+import '../../css/BlindtestGame.css'
 
 
 const spotifyApi = new SpotifyWebApi();
@@ -36,6 +38,7 @@ class BlindtestGame extends Component {
             }
             spotifyApi.play(uri)
         }
+        this.props.history.push(`/blindtest`)
         this.setState({ gameStarted })
     }
 
@@ -49,19 +52,10 @@ class BlindtestGame extends Component {
         this.setState({ playlistSelected: playlist })
     }
 
-    updateScore = () => {
-        let score = this.state.score
-        score += 1
-        if (this.state.gameStarted) {
-            this.setState({
-                score
-            })
-        }
-        spotifyApi.skipToNext()
-    }
-
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
+
+        this.props.history.push(`/`)
     }
 
     render() {
@@ -71,22 +65,25 @@ class BlindtestGame extends Component {
         })
         return (
             <div>
-                <div className="blindestGame">
-                    <div className="close">
-                        <Button content="retour à la maison" onClick={this.returnHome} />
-                    </div>
+                <div className="playlistPicker">
+
+                    <Header user={this.props.data.user} />
                     <div className={blindestGameClass}>
                         <PlaylistPicker
                             selectPlaylist={this.selectPlaylist}
                             access_token={this.props.access_token}
+                            data={this.props.data}
                         />
                     </div>
                     {this.state.playlistSelected &&
-                        <div className="game">
-                            <p>Are you fucking ready ?</p>
-                            <Button
-                                content={this.state.gameStarted ? "stop this now" : "yes, go go go"}
-                                onClick={this.state.gameStarted ? this.endGame : this.startGame} />
+                        <div
+                            className="game"
+                            onClick={this.state.gameStarted ? this.endGame : this.startGame}
+                        >
+                            {this.state.gameStarted
+                                ? <p className="game-cta">Arrêter la partie en cours</p>
+                                : <p className="game-cta">commencer le blindtest avec la playlist {this.state.playlistSelected.name}</p>
+                            }
                         </div>
                     }
                 </div>
@@ -94,7 +91,6 @@ class BlindtestGame extends Component {
                     {this.state.gameStarted &&
                         <BlindtestSession
                             access_token={this.props.access_token}
-                            updateScore={this.updateScore}
                             gameStarted={this.state.gameStarted}
                         />
                     }

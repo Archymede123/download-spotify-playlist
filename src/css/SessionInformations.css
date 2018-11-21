@@ -1,0 +1,19 @@
+.timer {
+    margin-top: 64px;
+    position: relative;
+}
+
+.timer::before {
+    content:"";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: red;
+    bottom: -4px;
+    left: 0;
+}
+
+.timing-container {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,122 @@
+.playlistPicker .header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+.playlistPicker .header .logo-container {
+    flex: 0 0 15%;
+    position: relative;
+}
+
+.playlistPicker .header .logo {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.playlistPicker .header .titles {
+    flex: 0 0 50%;
+}
+
+.playlistPicker .header .titles .main-title {
+    font-family: nikoleta;
+    font-size: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.playlistPicker .header .titles .subtitle {
+    font-family: arial-narrow;
+    font-size: 24px;
+    text-transform: none;
+    margin-top: 32px;
+    padding: 0;
+}
+
+/* user infos  */
+
+.userinfos {
+    flex: 0 0 15%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.userinfos .user-pic {
+    border-radius: 50%;
+    height: 64px;
+    width: 64px;
+}
+
+.userinfos .user-desc {
+    text-align: right;
+    margin-right: 16px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.userinfos .user-desc .usertype {
+    font-size: 10px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+.userinfos .user-desc .username {
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 4px;
+    letter-spacing: .6px;
+}
+
+/* grid  */
+
+.playlistPicker .playlist-owner {
+    margin: 24px 0;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #ffffff30;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+}
+
+/* cta  */
+
+.game {
+    background: var(--color-primary);
+    height: 48px;
+    width: 102%;
+    position: fixed;
+    bottom: 0;
+    left: calc(-50vw + 50%);
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer
+}
+
+.game .game-cta {
+    font-family: nikoleta;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+}
+
+.blindestGame div {
+    padding: 16px;
+}
+
+.playlistPage .blindtestContainer .close .cta {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+.blindestGame {
+    /* display: flex; */
+    justify-content: center;
+}
