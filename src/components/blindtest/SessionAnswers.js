@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
 
-
-
-
 class SessionAnswers extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            playlistGenres: []
-        }
-    }
-
-
     render() {
         return (
-            <ul className="played-song">
+            <div className="played-song" style={this.props.style}>
+                <div>
+                    Tu as
+                    <span> {this.props.score} </span>
+                    points
+                </div>
                 {this.props.answers.map((answer, key) =>
-                    <li key={key} className='answer-content'>
+                    <div key={key} className='answer-content'>
                         <img
                             src={answer.imageUrl}
                             alt=""
@@ -29,13 +23,11 @@ class SessionAnswers extends Component {
                         <div className='answer-type'>
                             {answer.score} points
                         </div>
-                    </li>
+                    </div>
                 )}
-
-            </ul>
+            </div>
         )
     }
-
 }
 
 export default SessionAnswers

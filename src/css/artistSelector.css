@@ -2,14 +2,14 @@
 .instructions {
     font-size: 32px;
     font-family: nikoleta;
-    margin: 64px 0;
+    margin: 48px 0;
+    padding: 16px;
 }
 
 .artists {
     display: flex;
     justify-content: space-around;
     padding: 0;
-    height: 264px;
 }
 
 .artist {
@@ -52,3 +52,9 @@
 .artist-name {
     margin-top: 16px;
 }
+
+/* .current-blindest .button-container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+} */

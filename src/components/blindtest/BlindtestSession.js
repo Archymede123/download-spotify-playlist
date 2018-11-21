@@ -117,6 +117,7 @@ class BlindtestSession extends Component {
     }
 
     componentDidMount() {
+        spotifyApi.setAccessToken(this.props.access_token)
         this.timer()
         this.setState({ sessionOn: true })
     }
@@ -129,8 +130,21 @@ class BlindtestSession extends Component {
     render() {
         return (
             <div className="blindtest-session">
-                <SessionAnswers answers={this.state.answers} />
-                <div className="current-session">
+                {this.state.answers.length > 0 &&
+                    <Motion
+                        defaultStyle={{ x: -800 }}
+                        style={{ x: spring(0) }}
+                    >
+                        {(style) => (
+                            <SessionAnswers
+                                score={this.state.score}
+                                answers={this.state.answers}
+                                style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }}
+                            />
+                        )}
+                    </Motion>
+                }
+                <div className={this.state.answers.length > 0 ? "current-session canGrow" : "current-session"}>
                     <SessionInformations
                         score={this.state.score}
                         remainingTime={this.state.remainingTime}

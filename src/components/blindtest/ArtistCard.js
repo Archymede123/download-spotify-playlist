@@ -8,7 +8,8 @@ import '../../css/ArtistCard.css';
 
 
 const Wrapper = styled.div`
-    
+    width: 80%;
+    margin: 0 auto;
     position: relative
     display: flex;
     flex-direction: column;
@@ -88,7 +89,7 @@ class ArtistCard extends Component {
                 {!userCanSelect && isTheAnswer &&
                     <Motion
                         defaultStyle={{ top: 200 }}
-                        style={{ top: spring(-64) }}
+                        style={{ top: spring(0) }}
                     >
                         {(style) => (
                             <CorrectAnswerBackground

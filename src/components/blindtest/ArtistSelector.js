@@ -36,7 +36,10 @@ class AristSelector extends Component {
                 isTheAnswer: true
             }
             let artistSelection = [...this.state.artistSelection, currentArtist]
-            this.setState({ artistSelection: shuffle(artistSelection) })
+            this.setState({
+                artistSelection: shuffle(artistSelection),
+                answerImageUrl: imageUrl,
+            })
         }
         )
     }
@@ -53,10 +56,7 @@ class AristSelector extends Component {
                         isSelected: false,
                         isTheAnswer: false
                     }]
-                    return this.setState({
-                        artistSelection: shuffle(artistSelection),
-                        answerImageUrl: imageUrl,
-                    })
+                    return this.setState({ artistSelection: shuffle(artistSelection) })
                 })
             })
     }
@@ -138,7 +138,6 @@ class AristSelector extends Component {
                         )}
 
                     </Motion>
-
                 }
 
             </div>

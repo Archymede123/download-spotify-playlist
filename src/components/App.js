@@ -11,6 +11,7 @@ import BlindtestGame from './blindtest/BlindtestGame';
 
 // css
 import '../css/App.css';
+import BlindtestSession from './blindtest/BlindtestSession';
 
 
 // import querystring from 'query-string';
@@ -95,6 +96,13 @@ class App extends Component {
                   path="/playlist/:playlistId"
                   render={(props) => <PlaylistPage {...props}
                     playlists={this.state.playlists}
+                    access_token={this.state.access_token}
+                  />}
+                />
+                <Route
+                  exact
+                  path="/blindtest"
+                  render={(props) => <BlindtestSession {...props}
                     access_token={this.state.access_token}
                   />}
                 />
