@@ -17,7 +17,7 @@ const Header = ({ user }) => {
             </div>
             <div className="userinfos">
                 <div className="user-desc">
-                    <p className="usertype">user</p>
+                    <p className="usertype">utilisateur</p>
                     <p className="username">{user[0]}</p>
                 </div>
                 <img className="user-pic" src={user[2]} alt="" />

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import Button from '../UI-components/Button'
+
 
 class SessionAnswers extends Component {
+
+
+
     render() {
         return (
-            <div className="played-song" style={this.props.style}>
-                <div>
-                    Tu as
-                    <span> {this.props.score} </span>
-                    points
-                </div>
+            <div className={!this.props.sessionOn ? "left-40 played-song" : "played-song"} style={this.props.style}>
+
                 {this.props.answers.map((answer, key) =>
                     <div key={key} className='answer-content'>
                         <img
@@ -25,6 +26,15 @@ class SessionAnswers extends Component {
                         </div>
                     </div>
                 )}
+                <div className='total-points'>
+                    total : {this.props.score} points
+                </div>
+                {!this.props.sessionOn &&
+                    <Button
+                        content="rejouer"
+                        onClick={this.props.restartGame}
+                    />
+                }
             </div>
         )
     }

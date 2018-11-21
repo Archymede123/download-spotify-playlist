@@ -27,7 +27,7 @@ class BlindtestSession extends Component {
             score: 0,
             songplayed: [],
             answers: [],
-            blindtestLength: 9,
+            blindtestLength: 10,
             sessionOn: false,
             timeToGuess,
             remainingTime: timeToGuess
@@ -86,6 +86,10 @@ class BlindtestSession extends Component {
         }
     }
 
+    restartGame = () => {
+        this.props.history.push(`/`)
+    }
+
     submitAnswer = (artistAnswered, imageUrl) => {
         clearInterval(this.interval)
         let timeSpent = this.state.timeToGuess - this.state.remainingTime
@@ -130,6 +134,11 @@ class BlindtestSession extends Component {
     render() {
         return (
             <div className="blindtest-session">
+                <div
+                    className='return-home'
+                    onClick={this.restartGame}
+                >
+                </div>
                 {this.state.answers.length > 0 &&
                     <Motion
                         defaultStyle={{ x: -800 }}
@@ -137,19 +146,28 @@ class BlindtestSession extends Component {
                     >
                         {(style) => (
                             <SessionAnswers
+                                history={this.props.history}
                                 score={this.state.score}
                                 answers={this.state.answers}
-                                style={{ transform: `translateX(${style.x}px)`, opacity: style.opacity }}
+                                style={{ transform: `translateX(${style.x}px)` }}
+                                sessionOn={this.state.sessionOn}
+                                restartGame={this.restartGame}
                             />
                         )}
                     </Motion>
                 }
-                <div className={this.state.answers.length > 0 ? "current-session canGrow" : "current-session"}>
-                    <SessionInformations
-                        score={this.state.score}
-                        remainingTime={this.state.remainingTime}
-                    />
-                    {this.state.sessionOn && this.state.currentData &&
+                {this.state.sessionOn && this.state.currentData &&
+                    <div className={this.state.answers.length > 0 ? "current-session canGrow" : "current-session"}>
+
+
+
+                        <SessionInformations
+                            score={this.state.score}
+                            remainingTime={this.state.remainingTime}
+                            sessionOn={this.state.sessionOn}
+                        />
+
+
                         <div className='current-blindest'>
                             <Motion
                                 defaultStyle={{ x: -800, opacity: 0 }}
@@ -162,13 +180,14 @@ class BlindtestSession extends Component {
                                         submitAnswer={this.submitAnswer}
                                         nextSong={this.nextSong}
                                         answers={this.state.answers}
+                                        sessionOn={this.state.sessionOn}
                                     />
                                 )}
 
                             </Motion>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
         );
     }
