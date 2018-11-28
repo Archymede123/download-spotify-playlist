@@ -10,6 +10,7 @@ import Button from './UI-components/Button'
 
 //css 
 import '../css/Homepage.css';
+import '../css/mobile.css'
 
 class Homepage extends Component {
     constructor() {

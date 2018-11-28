@@ -36,6 +36,27 @@
     padding: 0;
 }
 
+/* @media (max-width: 500px) {
+    .titles .subtitle {
+        width: 90%;
+        position: absolute;
+        top: 100px;
+        left: -5%;
+    }
+
+    .selectPlaylist {
+        margin-top: 120px;
+    }
+
+    .playlist {
+        margin: 0 auto;
+    }
+
+    .playlistPicker .playlist-owner {
+        padding-left: 24px;
+    }
+} */
+
 /* user infos  */
 
 .userinfos {
