@@ -37,6 +37,10 @@ class BlindtestGame extends Component {
                 "context_uri": this.state.playlistSelected.uri,
             }
             spotifyApi.play(uri)
+                .catch(() => {
+                    localStorage.clear()
+                    this.props.history.push(`/`)
+                })
         }
         this.props.history.push(`/blindtest`)
         this.setState({ gameStarted })
@@ -73,6 +77,7 @@ class BlindtestGame extends Component {
                             selectPlaylist={this.selectPlaylist}
                             access_token={this.props.access_token}
                             data={this.props.data}
+                            history={this.props.history}
                         />
                     </div>
                     {this.state.playlistSelected &&

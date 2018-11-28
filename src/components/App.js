@@ -8,10 +8,11 @@ import Homepage from './Homepage'
 import LoginPage from './LoginPage';
 import PlaylistPage from './PlaylistPage';
 import BlindtestGame from './blindtest/BlindtestGame';
+import BlindtestSession from './blindtest/BlindtestSession';
 
 // css
 import '../css/App.css';
-import BlindtestSession from './blindtest/BlindtestSession';
+
 
 
 // import querystring from 'query-string';

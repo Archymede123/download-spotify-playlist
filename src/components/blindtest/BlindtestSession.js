@@ -159,8 +159,6 @@ class BlindtestSession extends Component {
                 {this.state.sessionOn && this.state.currentData &&
                     <div className={this.state.answers.length > 0 ? "current-session canGrow" : "current-session"}>
 
-
-
                         <SessionInformations
                             score={this.state.score}
                             remainingTime={this.state.remainingTime}
