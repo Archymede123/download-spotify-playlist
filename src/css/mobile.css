@@ -1,0 +1,84 @@
+    
+
+    @media (max-width: 500px) {
+    
+
+    .loginpage {
+        width: 70%;
+    }
+
+    .titles .subtitle {
+        width: 90%;
+        position: absolute;
+        top: 100px;
+        left: 5%;
+    }
+
+    .selectPlaylist {
+        margin-top: 120px;
+    }
+
+    .playlist {
+        margin: 0 auto;
+    }
+
+    .playlistPicker .playlist-owner {
+        padding-left: 24px;
+    }
+
+    .playlistPicker .game {
+        height: 96px;
+        width: 100%;
+        left: calc(-50vw + 48%);
+    }
+
+    .game .game-cta {
+        line-height: 32px;
+    }
+
+    .current-session.canGrow {
+        transform: none;
+    }
+
+    .artists {
+        flex-direction: column;
+    }
+    
+    .artists .artist .all.loser::after,
+    .artists .artist .all.loser::before {
+        left: 36%;
+    }
+
+    .artist .active.winner {
+        margin-top: 32px;
+    }
+
+    .active.winner .feedback-message {
+        top: 40px;
+        left: 0px;
+    }
+
+    .active.winner .winner-background {
+        position: absolute;
+        left: 70%;
+    }
+
+    .active.winner .winner-background::after {
+        left: -100%;
+        width: 120vw;
+        height: 120%;
+        bottom: -2%;
+    }
+
+    .left-40.played-song {
+        display: block;
+    }
+
+    .current-session .current-blindest {
+        margin-top: 16px;
+    }
+
+    .current-blindest .instructions {
+        margin: 8px 0;
+    }
+}
