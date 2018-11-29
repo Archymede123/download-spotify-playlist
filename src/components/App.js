@@ -113,6 +113,7 @@ class App extends Component {
                   render={(props) => <BlindtestGame {...props}
                     access_token={this.state.access_token}
                     data={this.state}
+                    loadSpotifyData={this.loadSpotifyData}
                   />}
                 />
               </Switch>

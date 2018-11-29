@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import queryString from 'query-string'
+
 import Button from './UI-components/Button'
 import BoxBorder from './UI-components/BoxBorder'
 import SpotifyWebApi from 'spotify-web-api-js'
@@ -15,8 +17,8 @@ const spotifyApi = new SpotifyWebApi();
 class LoginPage extends Component {
     constructor() {
         super();
-        const params = this.getHashParams();
-        const access_token = params.access_token;
+
+        const access_token = this.getHashParams();
         if (access_token) {
             spotifyApi.setAccessToken(access_token)
         }
@@ -31,15 +33,9 @@ class LoginPage extends Component {
     _isMounted = true;
 
     getHashParams() {
-        var hashParams = {};
-        var e, r = /([^&;=]+)=?([^&;]*)/g,
-            q = window.location.hash.substring(1);
-        e = r.exec(q)
-        while (e) {
-            hashParams[e[1]] = decodeURIComponent(e[2]);
-            e = r.exec(q);
-        }
-        return hashParams;
+
+        let parsed = queryString.parse(window.location.search)
+        return parsed.access_token;
     }
 
     getUserInfo() {
@@ -52,8 +48,11 @@ class LoginPage extends Component {
 
     goToPlaylists = (event) => {
         event.preventDefault()
-        window.location = 'http://localhost:8888/login'
+        window.location = window.location.href.includes('localhost')
+            ? 'http://localhost:8888/login'
+            : 'https://blindtest-spotify-backend.herokuapp.com/login'
     }
+
 
     componentDidMount() {
         let accessToken = this.state.access_token

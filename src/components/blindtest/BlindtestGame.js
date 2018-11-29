@@ -9,6 +9,7 @@ import PlaylistPicker from './PlaylistPicker'
 import Header from './Header'
 
 
+
 // css
 import '../../css/BlindtestSession.css';
 import '../../css/BlindtestGame.css'
@@ -73,40 +74,40 @@ class BlindtestGame extends Component {
         })
         return (
             <div>
-                <div className="playlistPicker">
-
-                    <Header user={this.props.data.user} />
-                    <div className={blindestGameClass}>
-                        <PlaylistPicker
-                            selectPlaylist={this.selectPlaylist}
-                            access_token={this.props.access_token}
-                            data={this.props.data}
-                            history={this.props.history}
-                            unlog={this.unlog}
-                        />
-                    </div>
-                    {this.state.playlistSelected &&
-                        <div
-                            className="game"
-                            onClick={this.state.gameStarted ? this.endGame : this.startGame}
-                        >
-                            {this.state.gameStarted
-                                ? <p className="game-cta">Arrêter la partie en cours</p>
-                                : <p className="game-cta">commencer le blindtest avec la playlist {this.state.playlistSelected.name}</p>
-                            }
-                        </div>
-                    }
-                </div>
                 <div>
-                    {this.state.gameStarted &&
-                        <BlindtestSession
-                            access_token={this.props.access_token}
-                            gameStarted={this.state.gameStarted}
-                        />
-                    }
+                    <div className="playlistPicker">
+                        <Header user={this.props.data.user} />
+                        <div className={blindestGameClass}>
+                            <PlaylistPicker
+                                selectPlaylist={this.selectPlaylist}
+                                access_token={this.props.access_token}
+                                data={this.props.data}
+                                history={this.props.history}
+                                unlog={this.unlog}
+                            />
+                        </div>
+                        {this.state.playlistSelected &&
+                            <div
+                                className="game"
+                                onClick={this.state.gameStarted ? this.endGame : this.startGame}
+                            >
+                                {this.state.gameStarted
+                                    ? <p className="game-cta">Arrêter la partie en cours</p>
+                                    : <p className="game-cta">commencer le blindtest avec la playlist {this.state.playlistSelected.name}</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        {this.state.gameStarted &&
+                            <BlindtestSession
+                                access_token={this.props.access_token}
+                                gameStarted={this.state.gameStarted}
+                            />
+                        }
+                    </div>
                 </div>
             </div>
-
         );
     }
 }
