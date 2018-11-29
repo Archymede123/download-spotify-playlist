@@ -84,7 +84,7 @@
 
 .played-song .answer-details {
     flex: 1 0 60%;
-    max-width: 160px;
+    width: 160px;
     margin: 0 16px 0 8px;
     /* font-size: .85rem; */
 }

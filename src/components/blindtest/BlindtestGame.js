@@ -37,6 +37,11 @@ class BlindtestGame extends Component {
                 "context_uri": this.state.playlistSelected.uri,
             }
             spotifyApi.play(uri)
+                .catch(() => {
+                    localStorage.clear()
+                    this.props.history.push(`/`)
+                    this.setState({ user: false })
+                })
         }
         this.props.history.push(`/blindtest`)
         this.setState({ gameStarted })
@@ -48,13 +53,16 @@ class BlindtestGame extends Component {
         this.setState({ gameStarted })
     }
 
+    unlog = () => {
+        this.setState({ user: false })
+    }
+
     selectPlaylist = (playlist) => {
         this.setState({ playlistSelected: playlist })
     }
 
     componentDidMount() {
         spotifyApi.setAccessToken(this.props.access_token)
-
         this.props.history.push(`/`)
     }
 
@@ -73,6 +81,8 @@ class BlindtestGame extends Component {
                             selectPlaylist={this.selectPlaylist}
                             access_token={this.props.access_token}
                             data={this.props.data}
+                            history={this.props.history}
+                            unlog={this.unlog}
                         />
                     </div>
                     {this.state.playlistSelected &&

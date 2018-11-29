@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-
 // my components 
-// import PlaylistCard from '../PlaylistCard';
 import PlaylistPickerCards from './PlaylistPickerCards'
 
 // content
@@ -49,6 +47,11 @@ class PlaylistPicker extends Component {
                     }
                     let playlistsToRender = [...this.state.playlistsToRender, playlist]
                     this.setState({ playlistsToRender })
+                })
+                .catch(() => {
+                    localStorage.clear()
+                    this.props.history.push(`/`)
+                    this.props.unlog()
                 })
         })
     }
