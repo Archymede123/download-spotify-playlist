@@ -51,6 +51,7 @@ class PlaylistPicker extends Component {
                 .catch(() => {
                     localStorage.clear()
                     this.props.history.push(`/`)
+                    this.props.unlog()
                 })
         })
     }
